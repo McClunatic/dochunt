@@ -1,17 +1,20 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <b-jumbotron header="DocHunt" lead="Documentation Hunting Made Easy">
+      <p>Visit the following for more information!</p>
+      <b-button variant="info" href="#">More Info</b-button>
+    </b-jumbotron>
+    <hunter text=""></hunter>
   </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+import Hunter from "./components/Hunter.vue";
 
 export default {
   name: "app",
   components: {
-    HelloWorld
+    Hunter
   }
 };
 </script>
@@ -24,5 +27,11 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+.jumbotron {
+  background-image: url("./assets/logo.png");
+  background-repeat: no-repeat;
+  background-position: right center;
+  text-align: left;
 }
 </style>
