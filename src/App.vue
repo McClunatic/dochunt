@@ -5,16 +5,19 @@
       <b-button variant="info" href="#">More Info</b-button>
     </b-jumbotron>
     <hunter text=""></hunter>
+    <trophies></trophies>
   </div>
 </template>
 
 <script>
 import Hunter from "./components/Hunter.vue";
+import Trophies from "./components/Trophies.vue";
 
 export default {
   name: "app",
   components: {
-    Hunter
+    Hunter,
+    Trophies
   }
 };
 </script>
