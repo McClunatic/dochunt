@@ -19,12 +19,11 @@
               ></b-form-input>
               <b-input-group-append>
                 <b-button variant="reset" v-if="filters[index]">
-                  <font-awesome-icon :icon="['fas', 'times']"/>
+                  <font-awesome-icon :icon="['fas', 'times']" />
                 </b-button>
                 <b-button variant="reset" v-else disabled>
-                  <font-awesome-icon :icon="['fas', 'times']"/>
+                  <font-awesome-icon :icon="['fas', 'times']" />
                 </b-button>
-
               </b-input-group-append>
             </b-input-group>
           </th>
@@ -50,19 +49,19 @@ export default {
           number: "A-1",
           author: "Brian McClune",
           subject: "Very Cool",
-          date: new Date(1983, 1, 13)
+          date: new Date(1983, 1, 13).toLocaleDateString("en-CA")
         },
         {
           number: "A-2",
           author: "Brendan McClune",
           subject: "Still Pretty Good",
-          date: new Date(1984, 4, 30)
+          date: new Date(1984, 4, 30).toLocaleDateString("en-CA")
         },
         {
           number: "A-3",
           author: "Megan McClune",
           subject: "Somehow Also Solid",
-          date: new Date(1986, 10, 3)
+          date: new Date(1986, 10, 3).toLocaleDateString("en-CA")
         }
       ],
       filters: ["", "", "", ""]
@@ -72,5 +71,4 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-</style>
+<style scoped></style>
