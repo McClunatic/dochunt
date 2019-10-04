@@ -1,10 +1,13 @@
 <template>
   <div>
-    <b-input-group prepend="Target" class="m-2">
+    <b-input-group>
+      <b-input-group-prepend is-text class="ml-2">
+        <font-awesome-icon :icon="['fas', 'search']" />
+      </b-input-group-prepend>
       <b-form-input v-model="text" placeholder="Enter your search document">
       </b-form-input>
       <b-input-group-append>
-        <b-button variant="primary">Hunt</b-button>
+        <b-button variant="primary" class="mr-2">Hunt</b-button>
       </b-input-group-append>
     </b-input-group>
   </div>
