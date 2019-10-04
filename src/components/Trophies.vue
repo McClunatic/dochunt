@@ -12,10 +12,17 @@
       <template v-slot:thead-top="data">
         <b-tr>
           <th v-for="(field, index) in fields" :key="field.id">
-            <b-form-input
-              v-model="filters[index]"
-              :placeholder="'Filter by '.concat(field.key)"
-            ></b-form-input>
+            <b-input-group>
+              <b-form-input
+                v-model="filters[index]"
+                :placeholder="'Filter by '.concat(field.key)"
+              ></b-form-input>
+              <b-input-group-append>
+                <b-button variant="reset">
+                  <font-awesome-icon :icon="['fas', 'times']" />
+                </b-button>
+              </b-input-group-append>
+            </b-input-group>
           </th>
         </b-tr>
       </template>
