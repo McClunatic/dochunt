@@ -33,6 +33,6 @@ export default {
 .jumbotron {
   background-image: url("./assets/doc-hunt-logo.svg");
   background-repeat: no-repeat;
-  background-position: right center;
+  background-position: 99% center;
 }
 </style>
