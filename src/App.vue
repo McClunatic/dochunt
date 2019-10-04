@@ -27,7 +27,6 @@ export default {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
   margin-top: 60px;
 }
@@ -35,6 +34,5 @@ export default {
   background-image: url("./assets/doc-hunt-logo.svg");
   background-repeat: no-repeat;
   background-position: right center;
-  text-align: left;
 }
 </style>
