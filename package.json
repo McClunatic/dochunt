@@ -10,6 +10,9 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.25",
+    "@fortawesome/free-solid-svg-icons": "^5.11.2",
+    "@fortawesome/vue-fontawesome": "^0.1.7",
     "bootstrap-vue": "^2.0.0-rc.19",
     "core-js": "^2.6.5",
     "vue": "^2.6.10"
@@ -17,7 +20,7 @@
   "devDependencies": {
     "@babel/polyfill": "^7.4.4",
     "@vue/cli-plugin-babel": "^3.11.0",
-    "@vue/cli-plugin-e2e-nightwatch": "^3.11.0",
+    "@vue/cli-plugin-e2e-cypress": "^3.11.0",
     "@vue/cli-plugin-eslint": "^3.11.0",
     "@vue/cli-plugin-unit-mocha": "^3.11.0",
     "@vue/cli-service": "^3.11.0",
