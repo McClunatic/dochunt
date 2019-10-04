@@ -11,30 +11,12 @@
     >
       <template v-slot:thead-top="data">
         <b-tr>
-          <b-th>
+          <th v-for="(field, index) in fields" :key="field.id">
             <b-form-input
-              v-model="numberFilter"
-              placeholder="Filter by number"
+              v-model="filters[index]"
+              :placeholder="'Filter by '.concat(field.key)"
             ></b-form-input>
-          </b-th>
-          <b-th>
-            <b-form-input
-              v-model="authorFilter"
-              placeholder="Filter by author"
-            ></b-form-input>
-          </b-th>
-          <b-th>
-            <b-form-input
-              v-model="subjectFilter"
-              placeholder="Filter by subject"
-            ></b-form-input>
-          </b-th>
-          <b-th>
-            <b-form-input
-              v-model="dateFilter"
-              placeholder="Filter by date"
-            ></b-form-input>
-          </b-th>
+          </th>
         </b-tr>
       </template>
     </b-table>
@@ -47,10 +29,10 @@ export default {
   data: function() {
     return {
       fields: [
-        { key: "number", label: "Number", sortable: true },
-        { key: "author", label: "Author", sortable: true },
-        { key: "subject", label: "Subject", sortable: true },
-        { key: "date", label: "Date", sortable: true }
+        { id: 0, key: "number", label: "Number", sortable: true },
+        { id: 1, key: "author", label: "Author", sortable: true },
+        { id: 2, key: "subject", label: "Subject", sortable: true },
+        { id: 3, key: "date", label: "Date", sortable: true }
       ],
       items: [
         {
@@ -72,10 +54,7 @@ export default {
           date: new Date(1986, 10, 3)
         }
       ],
-      numberFilter: "",
-      authorFilter: "",
-      subjectFilter: "",
-      dateFilter: ""
+      filters: ["", "", "", ""]
     };
   }
 };
