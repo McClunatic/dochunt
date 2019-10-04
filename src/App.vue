@@ -32,7 +32,7 @@ export default {
   margin-top: 60px;
 }
 .jumbotron {
-  background-image: url("./assets/logo.png");
+  background-image: url("./assets/doc-hunt-logo.svg");
   background-repeat: no-repeat;
   background-position: right center;
   text-align: left;
