@@ -8,6 +8,8 @@
       caption="Trophies:"
       :fields="fields"
       :items="items"
+      :filter="filters"
+      :filter-function="filterFunction"
     >
       <template v-slot:thead-top="data">
         <b-tr>
@@ -66,6 +68,23 @@ export default {
       ],
       filters: ["", "", "", ""]
     };
+  },
+  methods: {
+    filterFunction: function(row, criteria) {
+      const results = criteria.map((elem, index) => {
+        if (elem.length === 0) {
+          return true;
+        }
+        const key = this.fields.filter(obj => obj.id === index)[0].key;
+        try {
+          var regex = new RegExp(elem);
+          return row[key].match(regex);
+        } catch (exc) {
+          return row[key].includes(elem);
+        }
+      });
+      return results.every(elem => elem);
+    }
   }
 };
 </script>
