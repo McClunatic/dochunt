@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <b-jumbotron header="DocHunt" lead="Documentation Hunting Made Easy">
-      <p>Visit the following for more information!</p>
+    <b-jumbotron header="DocHunt" lead="Take aim, fire, and score!">
+      <p>Documentation hunting made easy. Click to learn more.</p>
       <b-button variant="info" href="#">More Info</b-button>
     </b-jumbotron>
     <hunter @gotsome="collectKills($event)"></hunter>
@@ -67,6 +67,9 @@ export default {
   background-position: 99% center;
 }
 .jumbotron > h1 {
+  font-family: "Press Start 2P";
+}
+p.lead {
   font-family: "Press Start 2P";
 }
 </style>
