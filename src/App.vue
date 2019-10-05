@@ -4,7 +4,7 @@
       <p>Visit the following for more information!</p>
       <b-button variant="info" href="#">More Info</b-button>
     </b-jumbotron>
-    <hunter text=""></hunter>
+    <hunter @gotsome="collectKills($event)"></hunter>
     <trophies :kills="kills"></trophies>
   </div>
 </template>
@@ -42,6 +42,11 @@ export default {
         }
       ]
     };
+  },
+  methods: {
+    collectKills: function(newKills) {
+      this.kills = newKills;
+    }
   }
 };
 </script>

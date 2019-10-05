@@ -7,7 +7,9 @@
       <b-form-input v-model="text" placeholder="Enter your search document">
       </b-form-input>
       <b-input-group-append>
-        <b-button variant="primary" class="mr-2">Hunt</b-button>
+        <b-button @click="hunt" variant="primary" class="mr-2">
+          <font-awesome-icon :icon="['fas', 'crosshairs']" />
+        </b-button>
       </b-input-group-append>
     </b-input-group>
   </div>
@@ -16,8 +18,42 @@
 <script>
 export default {
   name: "Hunter",
-  props: {
-    text: String
+  data: function() {
+    return {
+      text: "",
+      freshKills: []
+    };
+  },
+  methods: {
+    hunt: function() {
+      this.freshKills = [
+        {
+          number: "A-4",
+          author: "Susan McClune",
+          subject: "Legit",
+          date: new Date(1953, 4, 18).toLocaleDateString("en-CA")
+        },
+        {
+          number: "A-5",
+          author: "Kevin McClune",
+          subject: "Forever",
+          date: new Date(1947, 9, 29).toLocaleDateString("en-CA")
+        },
+        {
+          number: "A-6",
+          author: "Helen Hackett",
+          subject: "Sassier Every Day",
+          date: new Date(1933, 3, 6).toLocaleDateString("en-CA")
+        },
+        {
+          number: "A-7",
+          author: "Edward Hackett",
+          subject: "Legend",
+          date: new Date(1933, 5, 6).toLocaleDateString("en-CA")
+        }
+      ];
+      this.$emit("gotsome", this.freshKills);
+    }
   }
 };
 </script>

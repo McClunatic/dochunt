@@ -4,11 +4,12 @@ import Vue from "vue";
 import "./plugins/bootstrap-vue";
 import App from "./App.vue";
 import { library } from "@fortawesome/fontawesome-svg-core";
+import { faCrosshairs } from "@fortawesome/free-solid-svg-icons";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
-library.add(faSearch, faTimes);
+library.add(faCrosshairs, faSearch, faTimes);
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 
