@@ -4,7 +4,11 @@
       <b-input-group-prepend is-text class="ml-2">
         <font-awesome-icon :icon="['fas', 'search']" />
       </b-input-group-prepend>
-      <b-form-input v-model="text" placeholder="Enter your search document">
+      <b-form-input
+        v-model="text"
+        v-on:keyup.enter="hunt"
+        placeholder="Enter your search document"
+      >
       </b-form-input>
       <b-input-group-append>
         <b-button v-if="text" @click="clear" type="reset" variant="light">
