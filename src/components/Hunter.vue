@@ -7,10 +7,18 @@
       <b-form-input v-model="text" placeholder="Enter your search document">
       </b-form-input>
       <b-input-group-append>
+        <b-button v-if="text" @click="clear" type="reset" variant="light">
+          <font-awesome-icon :icon="['fas', 'times']" />
+        </b-button>
+        <b-button v-else disabled type="reset" variant="light">
+          <font-awesome-icon :icon="['fas', 'times']" />
+        </b-button>
+      </b-input-group-append>
+      <b-input-group-append>
         <b-button v-if="text" @click="hunt" variant="primary" class="mr-2">
           <font-awesome-icon :icon="['fas', 'crosshairs']" />
         </b-button>
-        <b-button v-else disabled @click="hunt" variant="primary" class="mr-2">
+        <b-button v-else disabled variant="primary" class="mr-2">
           <font-awesome-icon :icon="['fas', 'crosshairs']" />
         </b-button>
       </b-input-group-append>
@@ -56,6 +64,9 @@ export default {
         }
       ];
       this.$emit("gotsome", this.freshKills);
+    },
+    clear: function() {
+      this.text = "";
     }
   }
 };

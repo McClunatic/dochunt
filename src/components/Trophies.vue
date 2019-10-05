@@ -20,10 +20,15 @@
                 :placeholder="'Filter by '.concat(field.key)"
               ></b-form-input>
               <b-input-group-append>
-                <b-button variant="reset" v-if="filters[index]">
+                <b-button
+                  v-if="filters[index]"
+                  @click="clear(index)"
+                  type="reset"
+                  variant="light"
+                >
                   <font-awesome-icon :icon="['fas', 'times']" />
                 </b-button>
-                <b-button variant="reset" v-else disabled>
+                <b-button v-else disabled type="reset" variant="light">
                   <font-awesome-icon :icon="['fas', 'times']" />
                 </b-button>
               </b-input-group-append>
@@ -65,6 +70,9 @@ export default {
         }
       });
       return results.every(elem => elem);
+    },
+    clear: function(index) {
+      this.filters.splice(index, 1, "");
     }
   }
 };
