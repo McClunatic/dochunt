@@ -5,7 +5,7 @@
       <b-button variant="info" href="#">More Info</b-button>
     </b-jumbotron>
     <hunter text=""></hunter>
-    <trophies></trophies>
+    <trophies :kills="kills"></trophies>
   </div>
 </template>
 
@@ -18,6 +18,30 @@ export default {
   components: {
     Hunter,
     Trophies
+  },
+  data: function() {
+    return {
+      kills: [
+        {
+          number: "A-1",
+          author: "Brian McClune",
+          subject: "Very Cool",
+          date: new Date(1983, 1, 13).toLocaleDateString("en-CA")
+        },
+        {
+          number: "A-2",
+          author: "Brendan McClune",
+          subject: "Still Pretty Good",
+          date: new Date(1984, 4, 30).toLocaleDateString("en-CA")
+        },
+        {
+          number: "A-3",
+          author: "Megan McClune",
+          subject: "Somehow Also Solid",
+          date: new Date(1986, 10, 3).toLocaleDateString("en-CA")
+        }
+      ]
+    };
   }
 };
 </script>

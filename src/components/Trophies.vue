@@ -7,7 +7,7 @@
       caption-top
       caption="Trophies:"
       :fields="fields"
-      :items="items"
+      :items="kills"
       :filter="filters"
       :filter-function="filterFunction"
     >
@@ -38,6 +38,7 @@
 <script>
 export default {
   name: "Trophies",
+  props: ["kills"],
   data: function() {
     return {
       fields: [
@@ -45,26 +46,6 @@ export default {
         { id: 1, key: "author", label: "Author", sortable: true },
         { id: 2, key: "subject", label: "Subject", sortable: true },
         { id: 3, key: "date", label: "Date", sortable: true }
-      ],
-      items: [
-        {
-          number: "A-1",
-          author: "Brian McClune",
-          subject: "Very Cool",
-          date: new Date(1983, 1, 13).toLocaleDateString("en-CA")
-        },
-        {
-          number: "A-2",
-          author: "Brendan McClune",
-          subject: "Still Pretty Good",
-          date: new Date(1984, 4, 30).toLocaleDateString("en-CA")
-        },
-        {
-          number: "A-3",
-          author: "Megan McClune",
-          subject: "Somehow Also Solid",
-          date: new Date(1986, 10, 3).toLocaleDateString("en-CA")
-        }
       ],
       filters: ["", "", "", ""]
     };
