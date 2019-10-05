@@ -7,7 +7,10 @@
       <b-form-input v-model="text" placeholder="Enter your search document">
       </b-form-input>
       <b-input-group-append>
-        <b-button @click="hunt" variant="primary" class="mr-2">
+        <b-button v-if="text" @click="hunt" variant="primary" class="mr-2">
+          <font-awesome-icon :icon="['fas', 'crosshairs']" />
+        </b-button>
+        <b-button v-else disabled @click="hunt" variant="primary" class="mr-2">
           <font-awesome-icon :icon="['fas', 'crosshairs']" />
         </b-button>
       </b-input-group-append>
