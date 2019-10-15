@@ -15,7 +15,6 @@ export default new Vuex.Store({
   },
   mutations: {
     freshKills: (state, kills) => {
-      console.log("mutating kills to:", kills)
       Vue.set(state, "kills", [...kills]);
     }
   },
