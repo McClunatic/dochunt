@@ -4,8 +4,8 @@
       <p>Documentation hunting made easy. Click to learn more.</p>
       <b-button variant="info" href="#">More Info</b-button>
     </b-jumbotron>
-    <hunter @gotsome="collectKills($event)"></hunter>
-    <trophies :kills="kills"></trophies>
+    <hunter></hunter>
+    <trophies></trophies>
   </div>
 </template>
 
@@ -19,33 +19,9 @@ export default {
     Hunter,
     Trophies
   },
-  data: function() {
-    return {
-      kills: [
-        {
-          number: "A-1",
-          author: "Brian McClune",
-          subject: "Very Cool",
-          date: new Date(1983, 1, 13).toLocaleDateString("en-CA")
-        },
-        {
-          number: "A-2",
-          author: "Brendan McClune",
-          subject: "Still Pretty Good",
-          date: new Date(1984, 4, 30).toLocaleDateString("en-CA")
-        },
-        {
-          number: "A-3",
-          author: "Megan McClune",
-          subject: "Somehow Also Solid",
-          date: new Date(1986, 10, 3).toLocaleDateString("en-CA")
-        }
-      ]
-    };
-  },
-  methods: {
-    collectKills: function(newKills) {
-      this.kills = newKills;
+  computed: {
+    kills: function() {
+      return this.$store.state.kills;
     }
   }
 };

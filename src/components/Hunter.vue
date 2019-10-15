@@ -35,39 +35,38 @@ export default {
   name: "Hunter",
   data: function() {
     return {
-      text: "",
-      freshKills: []
+      text: ""
     };
   },
   methods: {
     hunt: function() {
-      this.freshKills = [
+      console.log("dispatching fresh kills");
+      this.$store.dispatch("updateKills", [
         {
-          number: "A-4",
+          id: "A-4",
           author: "Susan McClune",
-          subject: "Legit",
+          title: "Legit",
           date: new Date(1953, 4, 18).toLocaleDateString("en-CA")
         },
         {
-          number: "A-5",
+          id: "A-5",
           author: "Kevin McClune",
-          subject: "Forever",
+          title: "Forever",
           date: new Date(1947, 9, 29).toLocaleDateString("en-CA")
         },
         {
-          number: "A-6",
+          id: "A-6",
           author: "Helen Hackett",
-          subject: "Sassier Every Day",
+          title: "Sassier Every Day",
           date: new Date(1933, 3, 6).toLocaleDateString("en-CA")
         },
         {
-          number: "A-7",
+          id: "A-7",
           author: "Edward Hackett",
-          subject: "Legend",
+          title: "Legend",
           date: new Date(1933, 5, 6).toLocaleDateString("en-CA")
         }
-      ];
-      this.$emit("gotsome", this.freshKills);
+      ]);
     },
     clear: function() {
       this.text = "";

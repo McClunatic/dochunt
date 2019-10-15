@@ -13,7 +13,7 @@
     >
       <template v-slot:thead-top="data">
         <b-tr>
-          <th v-for="(field, index) in fields" :key="field.id">
+          <th v-for="(field, index) in fields" :key="field.col">
             <b-input-group>
               <b-form-input
                 v-model="filters[index]"
@@ -43,25 +43,27 @@
 <script>
 export default {
   name: "Trophies",
-  props: ["kills"],
-  data: function() {
+  data: () => {
     return {
-      fields: [
-        { id: 0, key: "number", label: "Number", sortable: true },
-        { id: 1, key: "author", label: "Author", sortable: true },
-        { id: 2, key: "subject", label: "Subject", sortable: true },
-        { id: 3, key: "date", label: "Date", sortable: true }
-      ],
       filters: ["", "", "", ""]
     };
   },
+  computed: {
+    fields: function() {
+      return this.$store.state.fields;
+    },
+    kills: function() {
+      return this.$store.state.kills;
+    }
+  },
   methods: {
     filterFunction: function(row, criteria) {
-      const results = criteria.map((elem, index) => {
+      const results = criteria.map((elem, col) => {
         if (elem.length === 0) {
           return true;
         }
-        const key = this.fields.filter(obj => obj.id === index)[0].key;
+        const key = this.$store.state.fields.filter(obj => obj.col === col)[0]
+          .key;
         try {
           var regex = new RegExp(elem);
           return row[key].match(regex);
