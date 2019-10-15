@@ -11,29 +11,11 @@ export default new Vuex.Store({
       { col: 2, key: "author", label: "Author", sortable: true },
       { col: 3, key: "date", label: "Date", sortable: true }
     ],
-    kills: [
-      {
-        id: "A-1",
-        author: "Brian McClune",
-        title: "Very Cool",
-        date: new Date(1983, 1, 13).toLocaleDateString("en-CA")
-      },
-      {
-        id: "A-2",
-        author: "Brendan McClune",
-        title: "Still Pretty Good",
-        date: new Date(1984, 4, 30).toLocaleDateString("en-CA")
-      },
-      {
-        id: "A-3",
-        author: "Megan McClune",
-        title: "Somehow Also Solid",
-        date: new Date(1986, 10, 3).toLocaleDateString("en-CA")
-      }
-    ]
+    kills: []
   },
   mutations: {
     freshKills: (state, kills) => {
+      console.log("mutating kills to:", kills)
       Vue.set(state, "kills", [...kills]);
     }
   },

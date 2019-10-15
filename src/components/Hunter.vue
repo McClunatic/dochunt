@@ -38,35 +38,29 @@ export default {
       text: ""
     };
   },
+  computed: {
+    huntParams: function() {
+      const params = new URLSearchParams();
+      params.append("target", this.text);
+      return params;
+    }
+  },
   methods: {
     hunt: function() {
-      console.log("dispatching fresh kills");
-      this.$store.dispatch("updateKills", [
-        {
-          id: "A-4",
-          author: "Susan McClune",
-          title: "Legit",
-          date: new Date(1953, 4, 18).toLocaleDateString("en-CA")
-        },
-        {
-          id: "A-5",
-          author: "Kevin McClune",
-          title: "Forever",
-          date: new Date(1947, 9, 29).toLocaleDateString("en-CA")
-        },
-        {
-          id: "A-6",
-          author: "Helen Hackett",
-          title: "Sassier Every Day",
-          date: new Date(1933, 3, 6).toLocaleDateString("en-CA")
-        },
-        {
-          id: "A-7",
-          author: "Edward Hackett",
-          title: "Legend",
-          date: new Date(1933, 5, 6).toLocaleDateString("en-CA")
-        }
-      ]);
+      this.$http
+        /* .get(
+          "https://122383a581114da9bc8fab766c8bc512" +
+            ".vfs.cloud9.us-east-2.amazonaws.com:8081/hunt",
+          { params: this.huntParams }
+        ) */
+        .get("http://18.222.202.52:8081/hunt", { params: this.huntParams })
+        .then(res => {
+          console.log("dispatching fresh kills");
+          this.$store.dispatch("updateKills", res.data);
+        })
+        .catch(err => {
+          console.log(err);
+        });
     },
     clear: function() {
       this.text = "";
