@@ -1,15 +1,24 @@
 <template>
   <b-container fluid>
+    <div class="overflow-auto mt-4">
+      <b-pagination
+        align="center"
+        v-model="currentPage"
+        :total-rows="rows"
+        :per-page="perPage"
+      ></b-pagination>
+      <h6 class="text-center">Showing 10 trophies per page</h6>
+    </div>
     <b-table
       striped
       hover
       responsive
-      caption-top
-      caption="Trophies:"
       :fields="fields"
       :items="kills"
       :filter="filters"
       :filter-function="filterFunction"
+      :per-page="perPage"
+      :current-page="currentPage"
     >
       <template v-slot:thead-top="data">
         <b-tr>
@@ -45,7 +54,9 @@ export default {
   name: "Trophies",
   data: () => {
     return {
-      filters: ["", "", "", ""]
+      filters: ["", "", "", ""],
+      perPage: 10,
+      currentPage: 1
     };
   },
   computed: {
@@ -54,6 +65,9 @@ export default {
     },
     kills: function() {
       return this.$store.state.kills;
+    },
+    rows: function() {
+      return this.$store.state.kills.length;
     }
   },
   methods: {
