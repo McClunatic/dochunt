@@ -53,7 +53,7 @@ export default {
             ".vfs.cloud9.us-east-2.amazonaws.com:8081/hunt",
           { params: this.huntParams }
         ) */
-        .get("http://18.222.202.52:8081/hunt", { params: this.huntParams })
+        .get("http://18.218.18.121:8081/hunt", { params: this.huntParams })
         .then(res => {
           console.log("dispatching fresh kills");
           this.$store.dispatch("updateKills", res.data);
