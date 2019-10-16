@@ -15,7 +15,14 @@ export default new Vuex.Store({
   },
   mutations: {
     freshKills: (state, kills) => {
-      Vue.set(state, "kills", [...kills]);
+      const killDate = new Date();
+      const trophies = kills.map(kill => {
+        var trophy = Object.assign({}, kill);
+        killDate.setTime(Date.parse(kill.date));
+        trophy.date = killDate.toLocaleDateString("en-CA");
+        return trophy;
+      });
+      Vue.set(state, "kills", trophies);
     }
   },
   actions: {
