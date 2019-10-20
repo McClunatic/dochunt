@@ -41,19 +41,25 @@ export default {
   computed: {
     huntParams: function() {
       const params = new URLSearchParams();
-      params.append("target", this.text);
+      params.append(
+        "target",
+        this.text.startsWith("~") ? this.text.substr(1) : this.text
+      );
       return params;
     }
   },
   methods: {
     hunt: function() {
+      const huntUrl = this.text.startsWith("~")
+        ? "http://18.224.169.209:8082/snipe"
+        : "http://18.224.169.209:8081/hunt";
       this.$http
         /* .get(
           "https://122383a581114da9bc8fab766c8bc512" +
             ".vfs.cloud9.us-east-2.amazonaws.com:8081/hunt",
           { params: this.huntParams }
         ) */
-        .get("http://18.218.18.121:8081/hunt", { params: this.huntParams })
+        .get(huntUrl, { params: this.huntParams })
         .then(res => {
           console.log("dispatching fresh kills");
           this.$store.dispatch("updateKills", res.data);
