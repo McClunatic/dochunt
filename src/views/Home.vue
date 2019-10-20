@@ -1,0 +1,19 @@
+<template>
+  <b-container>
+    <b-img fluid center src="@/assets/doc-hunt-logo.svg"></b-img>
+    <h1 class="pt-4 pb-3">DocHunt</h1>
+    <hunter></hunter>
+  </b-container>
+</template>
+
+<script>
+// @ is an alias to /src
+import Hunter from "@/components/Hunter.vue";
+
+export default {
+  name: "home",
+  components: {
+    Hunter
+  }
+};
+</script>
