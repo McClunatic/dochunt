@@ -1,11 +1,9 @@
 <template>
   <div id="app">
-    <b-jumbotron header="DocHunt" lead="Take aim, fire, and score!">
-      <p>Documentation hunting made easy. Click to learn more.</p>
-      <b-button variant="info" href="#">More Info</b-button>
-    </b-jumbotron>
+    <b-img fluid center src="./assets/doc-hunt-logo.svg"></b-img>
+    <h1 class="pt-4 pb-3">DocHunt</h1>
     <hunter></hunter>
-    <trophies></trophies>
+    <trophies v-if="kills.length"></trophies>
   </div>
 </template>
 
@@ -45,7 +43,8 @@ export default {
 .jumbotron > h1 {
   font-family: "Press Start 2P";
 }
-p.lead {
+h1 {
   font-family: "Press Start 2P";
+  text-align: center;
 }
 </style>

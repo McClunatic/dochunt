@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <b-container class="align-items-center">
     <b-input-group>
       <b-input-group-prepend is-text class="ml-2">
         <font-awesome-icon :icon="['fas', 'search']" />
@@ -8,6 +8,7 @@
         v-model="text"
         v-on:keyup.enter="hunt"
         placeholder="Enter your search document"
+        size="lg"
       >
       </b-form-input>
       <b-input-group-append>
@@ -27,7 +28,7 @@
         </b-button>
       </b-input-group-append>
     </b-input-group>
-  </div>
+  </b-container>
 </template>
 
 <script>
