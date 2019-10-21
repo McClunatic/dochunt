@@ -84,10 +84,10 @@ export default {
       var targetUrl = null;
       var params = null;
       if (target.startsWith("~")) {
-        targetUrl = "http://18.220.121.203:8082/snipe";
+        targetUrl = process.env.VUE_APP_LDA_API_URL;
         params = { target: target.substr(1) };
       } else {
-        targetUrl = "http://18.220.121.203:8081/hunt";
+        targetUrl = process.env.VUE_APP_API_URL;
         params = { target: target };
       }
       this.$http
