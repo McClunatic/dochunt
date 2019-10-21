@@ -1,10 +1,12 @@
 <template>
-  <b-container>
+  <b-container fluid>
     <b-navbar toggleable="md">
-      <b-navbar-brand href="#">
+      <router-link tag="b-navbar-brand" to="/">
         <img src="@/assets/doc-hunt-logo.svg" alt="DocHunt" />
-      </b-navbar-brand>
-      <hunter></hunter>
+      </router-link>
+      <b-nav-form v-on:submit.prevent>
+        <hunter alignment="align-items-left" size="md"></hunter>
+      </b-nav-form>
     </b-navbar>
     <trophies></trophies>
   </b-container>
@@ -23,3 +25,9 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+img {
+  max-width: 64px;
+}
+</style>

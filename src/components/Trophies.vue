@@ -70,7 +70,35 @@ export default {
       return this.$store.state.kills.length;
     }
   },
+  created: function() {
+    this.collectKills();
+  },
+  watch: {
+    $route: function() {
+      this.collectKills();
+    }
+  },
   methods: {
+    collectKills: function() {
+      const target = this.$route.query.target;
+      var targetUrl = null;
+      var params = null;
+      if (target.startsWith("~")) {
+        targetUrl = "http://18.220.121.203:8082/snipe";
+        params = { target: target.substr(1) };
+      } else {
+        targetUrl = "http://18.220.121.203:8081/hunt";
+        params = { target: target };
+      }
+      this.$http
+        .get(targetUrl, { params: params })
+        .then(res => {
+          this.$store.dispatch("updateKills", res.data);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
     filterFunction: function(row, criteria) {
       const results = criteria.map((elem, col) => {
         if (elem.length === 0) {
