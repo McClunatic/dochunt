@@ -1,14 +1,5 @@
 <template>
   <b-container fluid>
-    <div class="overflow-auto mt-4">
-      <b-pagination
-        align="center"
-        v-model="currentPage"
-        :total-rows="rows"
-        :per-page="perPage"
-      ></b-pagination>
-      <h6 class="text-center">Showing 10 trophies per page</h6>
-    </div>
     <b-table
       striped
       hover
@@ -19,6 +10,7 @@
       :filter-function="filterFunction"
       :per-page="perPage"
       :current-page="currentPage"
+      caption="Showing 10 trophies per page"
     >
       <template v-slot:thead-top="data">
         <b-tr>
@@ -46,6 +38,14 @@
         </b-tr>
       </template>
     </b-table>
+    <div class="overflow-auto mt-4">
+      <b-pagination
+        align="center"
+        v-model="currentPage"
+        :total-rows="rows"
+        :per-page="perPage"
+      ></b-pagination>
+    </div>
   </b-container>
 </template>
 
