@@ -38,6 +38,18 @@ export default {
       text: ""
     };
   },
+  created: function() {
+    if (this.$route.query) {
+      this.text = this.$route.query.target;
+    }
+  },
+  watch: {
+    $route: function() {
+      if (this.$route.query) {
+        this.text = this.$route.query.target;
+      }
+    }
+  },
   methods: {
     hunt: function() {
       this.$router.push({ name: "search", query: { target: this.text } });
