@@ -71,11 +71,15 @@ export default {
     }
   },
   created: function() {
-    this.collectKills();
+    if (this.$route.query.target) {
+      this.collectKills();
+    }
   },
   watch: {
     $route: function() {
-      this.collectKills();
+      if (this.$route.query.target) {
+        this.collectKills();
+      }
     }
   },
   methods: {
