@@ -13,9 +13,10 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { faKey } from "@fortawesome/free-solid-svg-icons";
+import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
-library.add(faCrosshairs, faSearch, faTimes, faUser, faKey);
+library.add(faCrosshairs, faSearch, faTimes, faUser, faKey, faEnvelope);
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 

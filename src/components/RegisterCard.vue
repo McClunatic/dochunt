@@ -7,6 +7,20 @@
         </template>
         <b-input-group class="p-2">
           <b-input-group-prepend is-text>
+            <font-awesome-icon :icon="['fas', 'envelope']"></font-awesome-icon>
+          </b-input-group-prepend>
+          <b-form-input
+            v-model="email"
+            :state="emailState"
+            v-on:keyup.enter="submit"
+            autofocus
+            placeholder="Enter your email"
+          ></b-form-input>
+          <b-form-invalid-feedback v-html="emailFeedback">
+          </b-form-invalid-feedback>
+        </b-input-group>
+        <b-input-group class="p-2">
+          <b-input-group-prepend is-text>
             <font-awesome-icon :icon="['fas', 'user']"></font-awesome-icon>
           </b-input-group-prepend>
           <b-form-input
@@ -63,6 +77,7 @@ export default {
   name: "RegisterCard",
   data: function() {
     return {
+      email_regexp: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
       email: "",
       username: "",
       password: "",
@@ -71,6 +86,9 @@ export default {
     };
   },
   watch: {
+    email: function() {
+      this.submitted = false;
+    },
     username: function() {
       this.submitted = false;
     },
@@ -82,6 +100,9 @@ export default {
     }
   },
   computed: {
+    emailState: function() {
+      return !this.submitted ? null : this.email_regexp.test(this.email);
+    },
     usernameState: function() {
       return !this.submitted ? null : this.username.length >= 4;
     },
@@ -90,6 +111,15 @@ export default {
     },
     confirmState: function() {
       return !this.submitted ? null : this.password === this.password_confirm;
+    },
+    emailFeedback: function() {
+      if (this.email.length === 0) {
+        return "Please enter your email";
+      } else if (!this.emailState) {
+        return "Please enter a valid email address";
+      } else {
+        return "";
+      }
     },
     usernameFeedback: function() {
       if (this.username.length === 0) {
@@ -122,8 +152,14 @@ export default {
   methods: {
     submit: function() {
       this.submitted = true;
-      if (this.usernameState && this.passwordState && this.confirmState) {
+      if (
+        this.emailState &&
+        this.usernameState &&
+        this.passwordState &&
+        this.confirmState
+      ) {
         console.log("Submitting form...");
+        this.email = "";
         this.username = "";
         this.password = "";
         this.password_confirm = "";
