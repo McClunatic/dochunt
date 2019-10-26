@@ -1,7 +1,7 @@
 <template>
   <div class="row justify-content-center h-100">
     <div class="col-4 my-auto mx-auto">
-      <b-card header-tag="header" footer-tag="footer">
+      <b-card header-tag="header">
         <template v-slot:header>
           <h4>Register!</h4>
         </template>
@@ -27,7 +27,6 @@
             v-model="username"
             :state="usernameState"
             v-on:keyup.enter="submit"
-            autofocus
             placeholder="Select your username"
           ></b-form-input>
           <b-form-invalid-feedback v-html="usernameFeedback">
@@ -62,11 +61,8 @@
           </b-form-invalid-feedback>
         </b-input-group>
         <div class="p-2 mt-2">
-          <b-button block variant="primary" @click="submit">Login</b-button>
+          <b-button block variant="primary" @click="submit">Register</b-button>
         </div>
-        <template v-slot:footer>
-          Don't have an account? <b-link href="#">Sign Up</b-link>
-        </template>
       </b-card>
     </div>
   </div>

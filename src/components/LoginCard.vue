@@ -119,7 +119,7 @@ h4 {
 }
 
 .card {
-  height: 350px;
+  height: 325px;
   width: 350px;
 }
 
