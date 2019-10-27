@@ -155,6 +155,23 @@ export default {
         this.confirmState
       ) {
         console.log("Submitting form...");
+
+        const targetUrl = process.env.VUE_APP_API_URL + "/register";
+        this.$http
+          .post(targetUrl, {
+            username: this.username,
+            email: this.email,
+            password: this.password
+          })
+          .then(res => {
+            this.$store.dispatch("updateUser", res.data.user);
+            console.log(`response: ${res.data.message}`);
+            this.$router.push({ name: "home" });
+          })
+          .catch(err => {
+            console.log(err);
+          });
+
         this.email = "";
         this.username = "";
         this.password = "";

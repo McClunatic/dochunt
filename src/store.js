@@ -5,6 +5,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    user: null,
     fields: [
       {
         col: 0,
@@ -38,6 +39,9 @@ export default new Vuex.Store({
     kills: []
   },
   mutations: {
+    setUser: (state, user) => {
+      state.user = user;
+    },
     freshKills: (state, kills) => {
       const killDate = new Date();
       const trophies = kills.map(kill => {
@@ -50,6 +54,9 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    updateUser: (context, user) => {
+      context.commit("setUser", user);
+    },
     updateKills: (context, kills) => {
       context.commit("freshKills", kills);
     }
