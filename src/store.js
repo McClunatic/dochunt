@@ -43,15 +43,35 @@ export default new Vuex.Store({
       state.user = user;
     },
     freshKills: (state, kills) => {
+      console.log("fresh kills: ", kills);
       const killDate = new Date();
       const trophies = kills.map(kill => {
         var trophy = Object.assign({}, kill);
         killDate.setTime(Date.parse(kill.date));
         trophy.date = killDate.toLocaleDateString("en-CA");
         trophy.title = kill.title.link(kill.href);
+        if (kill.similarity) trophy.similarity = kill.similarity.toFixed(8);
         return trophy;
       });
+
       Vue.set(state, "kills", trophies);
+
+      const newFields = state.fields.slice();
+      if (trophies.length > 0 && trophies[0].similarity) {
+        newFields[3].thStyle = "width: 8%";
+        newFields[4] = {
+          col: 4,
+          key: "similarity",
+          label: "Similarity",
+          sortable: true,
+          thStyle: "width: 8%"
+        };
+      } else {
+        newFields[3].thStyle = "width: 16%";
+        newFields.length = 4;
+      }
+
+      Vue.set(state, "fields", newFields);
     }
   },
   actions: {
