@@ -37,6 +37,9 @@
           </th>
         </b-tr>
       </template>
+      <template v-slot:cell(title)="data">
+        <span v-html="data.value"></span>
+      </template>
     </b-table>
     <div class="overflow-auto mt-4">
       <b-pagination

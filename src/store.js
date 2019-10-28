@@ -48,6 +48,7 @@ export default new Vuex.Store({
         var trophy = Object.assign({}, kill);
         killDate.setTime(Date.parse(kill.date));
         trophy.date = killDate.toLocaleDateString("en-CA");
+        trophy.title = kill.title.link(kill.href);
         return trophy;
       });
       Vue.set(state, "kills", trophies);
