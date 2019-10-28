@@ -1,5 +1,5 @@
 <template>
-  <b-container fluid>
+  <b-container fluid class="mt-5">
     <b-table
       striped
       hover

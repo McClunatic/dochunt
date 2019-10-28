@@ -7,6 +7,18 @@
       <b-nav-form v-on:submit.prevent>
         <hunter alignment="align-items-left" size="md"></hunter>
       </b-nav-form>
+      <router-link v-if="!user" tag="b-navbar-nav" to="/login" class="ml-auto">
+        Login
+      </router-link>
+      <b-navbar-nav v-else class="ml-auto">
+        <b-nav-item-dropdown right>
+          <template v-slot:button-content>
+            <em>{{ user }}</em>
+          </template>
+          <b-dropdown-item href="#">Profile</b-dropdown-item>
+          <b-dropdown-item href="#">Sign out</b-dropdown-item>
+        </b-nav-item-dropdown>
+      </b-navbar-nav>
     </b-navbar>
     <trophies></trophies>
   </b-container>
@@ -22,12 +34,17 @@ export default {
   components: {
     Hunter,
     Trophies
+  },
+  computed: {
+    user: function() {
+      return this.$store.state.user;
+    }
   }
 };
 </script>
 
 <style scoped>
 img {
-  max-width: 64px;
+  max-height: 28px;
 }
 </style>
