@@ -18,7 +18,7 @@
             <em>{{ username }}</em>
           </template>
           <b-dropdown-item href="#">Profile</b-dropdown-item>
-          <b-dropdown-item href="#">Sign out</b-dropdown-item>
+          <b-dropdown-item-button @click="logout">Sign out</b-dropdown-item-button>
         </b-nav-item-dropdown>
       </b-navbar-nav>
     </b-navbar>
@@ -40,6 +40,11 @@ export default {
   computed: {
     username: function() {
       return this.$store.state.user.username;
+    }
+  },
+  methods: {
+    logout: function() {
+      this.$store.dispatch("logout").then(this.$router.push("login"));
     }
   }
 };
