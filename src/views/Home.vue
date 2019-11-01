@@ -1,9 +1,11 @@
 <template>
   <b-container fluid>
     <b-navbar toggleable="md">
-      <router-link v-if="!user" tag="b-navbar-nav" to="/login" class="ml-auto">
-        Login
-      </router-link>
+      <b-navbar-nav v-if="!user" class="ml-auto">
+        <li class="nav-item">
+          <router-link class="nav-link" to="/login">Login</router-link>
+        </li>
+      </b-navbar-nav>
       <b-navbar-nav v-else class="ml-auto">
         <b-nav-item-dropdown right>
           <template v-slot:button-content>

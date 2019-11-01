@@ -1,15 +1,17 @@
 <template>
   <b-container fluid>
     <b-navbar toggleable="md">
-      <router-link tag="b-navbar-brand" to="/">
+      <router-link class="navbar-brand" to="/">
         <img src="@/assets/doc-hunt-logo.svg" alt="DocHunt" />
       </router-link>
       <b-nav-form v-on:submit.prevent>
         <hunter alignment="align-items-left" size="md"></hunter>
       </b-nav-form>
-      <router-link v-if="!user" tag="b-navbar-nav" to="/login" class="ml-auto">
-        Login
-      </router-link>
+      <b-navbar-nav v-if="!user" class="ml-auto">
+        <li class="nav-item">
+          <router-link class="nav-link" to="/login">Login</router-link>
+        </li>
+      </b-navbar-nav>
       <b-navbar-nav v-else class="ml-auto">
         <b-nav-item-dropdown right>
           <template v-slot:button-content>
