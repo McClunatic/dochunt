@@ -119,8 +119,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import url("https://fonts.googleapis.com/css?family=Press+Start+2P");
-
 h4 {
   margin-top: 8px;
   font-family: "Press Start 2P";

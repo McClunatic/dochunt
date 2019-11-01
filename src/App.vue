@@ -5,8 +5,6 @@
 </template>
 
 <style lang="scss">
-@import url("https://fonts.googleapis.com/css?family=Press+Start+2P");
-
 body {
   height: 100vh;
 }

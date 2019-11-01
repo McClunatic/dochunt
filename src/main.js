@@ -15,6 +15,7 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { faKey } from "@fortawesome/free-solid-svg-icons";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import "typeface-press-start-2p";
 
 library.add(faCrosshairs, faSearch, faTimes, faUser, faKey, faEnvelope);
 
