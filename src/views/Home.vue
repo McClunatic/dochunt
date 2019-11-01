@@ -9,7 +9,7 @@
       <b-navbar-nav v-else class="ml-auto">
         <b-nav-item-dropdown right>
           <template v-slot:button-content>
-            <em>{{ user }}</em>
+            <em>{{ username}}</em>
           </template>
           <b-dropdown-item href="#">Profile</b-dropdown-item>
           <b-dropdown-item href="#">Sign out</b-dropdown-item>
@@ -34,8 +34,8 @@ export default {
     Hunter
   },
   computed: {
-    user: function() {
-      return this.$store.state.user;
+    username: function() {
+      return this.$store.state.user.username;
     }
   }
 };
