@@ -101,7 +101,7 @@ export default {
             password: this.password
           })
           .then(res => {
-            this.$store.dispatch("updateUser", res.data.user);
+            this.$store.dispatch("login", res.data.user);
             console.log(`response: ${res.data.message}`);
             this.$router.push({ name: "home" });
           })

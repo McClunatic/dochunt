@@ -75,7 +75,7 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    updateUser: (context, user) => {
+    login: (context, user) => {
       context.commit("setUser", user);
     },
     updateKills: (context, kills) => {
