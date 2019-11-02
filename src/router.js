@@ -4,6 +4,7 @@ import Home from "./views/Home.vue";
 import Login from "./views/Login.vue";
 import Register from "./views/Register.vue";
 import Search from "./views/Search.vue";
+import store from "./store"
 
 Vue.use(Router);
 
@@ -14,25 +15,39 @@ export default new Router({
     {
       path: "/",
       name: "home",
-      component: Home
+      component: Home,
+      beforeEnter: (to, from, next) => {
+        if (!store.state.user) next({ name: "login" });
+        else next();
+      }
     },
     {
       path: "/login",
       name: "login",
-      component: Login
+      component: Login,
+      beforeEnter: (to, from, next) => {
+        if (store.state.user) next({ name: "home" });
+        else next();
+      }
     },
     {
       path: "/register",
       name: "register",
-      component: Register
+      component: Register,
+      beforeEnter: (to, from, next) => {
+        if (store.state.user) next({ name: "home" });
+        else next();
+      }
     },
     {
       path: "/search",
       name: "search",
-      // route level code-splitting
-      // this generates a separate chunk (search.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: Search
+      component: Search,
+      beforeEnter: (to, from, next) => {
+        if (!store.state.user)
+          next({ name: "login", next: { path: to.fullPath } });
+        else next();
+      }
     }
   ]
 });

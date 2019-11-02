@@ -38,7 +38,7 @@
         </div>
         <template v-slot:footer>
           Don't have an account?&nbsp;
-          <router-link to="register">Sign Up</router-link>
+          <router-link :to="registerRoute">Sign Up</router-link>
         </template>
       </b-card>
     </div>
@@ -64,6 +64,11 @@ export default {
     }
   },
   computed: {
+    registerRoute: function() {
+      return this.$route.next
+        ? { "name": "register", next: this.$route.next }
+        : { "name": "register" };
+    },
     usernameState: function() {
       return !this.submitted ? null : this.username.length >= 4;
     },
@@ -104,7 +109,7 @@ export default {
           )
           .then(res => {
             console.log(`response: ${res.data.message}`);
-            this.$router.push({ name: "home" });
+            this.$router.push(this.$route.next || { name: "home" });
           })
           .catch(err => console.log(err));
 

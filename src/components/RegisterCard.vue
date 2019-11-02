@@ -166,7 +166,7 @@ export default {
           )
           .then(res => {
             console.log(`response: ${res.data.message}`);
-            this.$router.push({ name: "home" });
+            this.$router.push(this.$route.next || { name: "home" });
           })
           .catch(err => console.log(err));
 
