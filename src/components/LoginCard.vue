@@ -98,9 +98,11 @@ export default {
           password: this.password
         };
         this.$store
-          .dispatch("login", this.$http
-            .post(`${process.env.VUE_APP_API_URL}/login`, data)
-          ).then(res => {
+          .dispatch(
+            "login",
+            this.$http.post(`${process.env.VUE_APP_API_URL}/login`, data)
+          )
+          .then(res => {
             console.log(`response: ${res.data.message}`);
             this.$router.push({ name: "home" });
           })

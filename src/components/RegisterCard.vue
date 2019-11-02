@@ -160,8 +160,10 @@ export default {
           password: this.password
         };
         this.$store
-          .dispatch("register", this.$http
-            .post(`${process.env.VUE_APP_API_URL}/login`, data)
+          .dispatch(
+            "register",
+            this.$http.post(`${process.env.VUE_APP_API_URL}/register`, data)
+          )
           .then(res => {
             console.log(`response: ${res.data.message}`);
             this.$router.push({ name: "home" });
