@@ -42,7 +42,7 @@ export default new Vuex.Store({
     setUser: (state, user) => {
       state.user = user;
     },
-    clearUser: (state) => {
+    clearUser: state => {
       state.user = null;
     },
     freshKills: (state, kills) => {
@@ -81,7 +81,7 @@ export default new Vuex.Store({
     login: (context, user) => {
       context.commit("setUser", user);
     },
-    logout: (context) => {
+    logout: context => {
       context.commit("clearUser");
     },
     updateKills: (context, kills) => {
