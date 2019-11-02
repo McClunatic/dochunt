@@ -1,5 +1,6 @@
 import "@babel/polyfill";
 import "mutationobserver-shim";
+import devtools from "@vue/devtools";
 import Vue from "vue";
 import "./plugins/bootstrap-vue";
 import App from "./App.vue";
@@ -24,6 +25,10 @@ Vue.component("font-awesome-icon", FontAwesomeIcon);
 Vue.use(VueAxios, axios);
 
 Vue.config.productionTip = false;
+
+if (process.env.NODE_ENV === "development") {
+  devtools.connect();
+}
 
 new Vue({
   store,
