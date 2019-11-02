@@ -37,7 +37,8 @@
           <b-button block variant="primary" @click="submit">Login</b-button>
         </div>
         <template v-slot:footer>
-          Don't have an account? <b-link href="#">Sign Up</b-link>
+          Don't have an account?&nbsp;
+          <router-link to="register">Sign Up</router-link>
         </template>
       </b-card>
     </div>
