@@ -52,8 +52,8 @@ export default {
   },
   methods: {
     hunt: function() {
-      const query = {target: this.text };
-      this.$store.dispatch('updateQuery', query);
+      const query = { target: this.text };
+      this.$store.dispatch("query", query);
       this.$router.push({ name: "search", query: query });
     },
     clear: function() {

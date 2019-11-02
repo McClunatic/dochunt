@@ -6,6 +6,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     user: null,
+    status: null,
     query: null,
     fields: [
       {
@@ -40,20 +41,24 @@ export default new Vuex.Store({
     kills: []
   },
   mutations: {
-    setUser: (state, user) => {
+    authenticated: (state, user) => {
       state.user = user;
+      state.status = "authenticated";
     },
-    clearUser: state => {
+    denied: state => {
+      state.status = "denied";
+    },
+    unauthenticated: state => {
       state.user = null;
+      state.status = null;
     },
-    setQuery: (state, query) => {
+    query: (state, query) => {
       state.query = query;
     },
-    freshKills: (state, kills) => {
-      console.log("fresh kills: ", kills);
+    kills: (state, kills) => {
       const killDate = new Date();
       const trophies = kills.map(kill => {
-        var trophy = Object.assign({}, kill);
+        let trophy = Object.assign({}, kill);
         killDate.setTime(Date.parse(kill.date));
         trophy.date = killDate.toLocaleDateString("en-CA");
         trophy.title = kill.title.link(kill.href);
@@ -82,17 +87,52 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    login: (context, user) => {
-      context.commit("setUser", user);
+    login: (context, data) => {
+      return new Promise((resolve, reject) => {
+        this.$http
+          .post(`${process.env.VUE_APP_API_URL}/login`, data)
+          .then(res => {
+            let user = {
+              id: res.data.id,
+              username: res.data.username,
+              email: res.data.email
+            };
+            this.commit("authenticated", user);
+            resolve(res);
+          })
+          .catch(err => {
+            this.commit("denied");
+            reject(err);
+          });
+      });
+    },
+    register: (context, data) => {
+      return new Promise((resolve, reject) => {
+        this.$http
+          .post(`${process.env.VUE_APP_API_URL}/register`, data)
+          .then(res => {
+            let user = {
+              id: res.data.id,
+              username: res.data.username,
+              email: res.data.email
+            };
+            this.commit("authenticated", user);
+            resolve(res);
+          })
+          .catch(err => {
+            this.commit("denied");
+            reject(err);
+          });
+      });
     },
     logout: context => {
-      context.commit("clearUser");
+      context.commit("unauthenticated");
     },
     updateQuery: (context, query) => {
-      context.commit("setQuery", query);
+      context.commit("query", query);
     },
     updateKills: (context, kills) => {
-      context.commit("freshKills", kills);
+      context.commit("kills", kills);
     }
   }
 });

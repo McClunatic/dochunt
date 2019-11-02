@@ -93,26 +93,17 @@ export default {
     submit: function() {
       this.submitted = true;
       if (this.usernameState && this.passwordState) {
-        console.log("Submitting form...");
-
-        const targetUrl = process.env.VUE_APP_API_URL + "/login";
-        this.$http
-          .post(targetUrl, {
-            username: this.username,
-            password: this.password
-          })
+        let data = {
+          username: this.username,
+          password: this.password
+        };
+        this.$store
+          .dispatch("login", data)
           .then(res => {
-            this.$store.dispatch("login", {
-              id: res.data.id,
-              username: res.data.username,
-              email: res.data.email
-            });
             console.log(`response: ${res.data.message}`);
             this.$router.push({ name: "home" });
           })
-          .catch(err => {
-            console.log(err);
-          });
+          .catch(err => console.log(err));
 
         this.username = "";
         this.password = "";
