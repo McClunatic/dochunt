@@ -66,8 +66,8 @@ export default {
   computed: {
     registerRoute: function() {
       return this.$route.next
-        ? { "name": "register", next: this.$route.next }
-        : { "name": "register" };
+        ? { name: "register", next: this.$route.next }
+        : { name: "register" };
     },
     usernameState: function() {
       return !this.submitted ? null : this.username.length >= 4;
