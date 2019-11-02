@@ -1,7 +1,7 @@
 <template>
   <b-container fluid>
     <b-navbar toggleable="md">
-      <b-navbar-nav v-if="!user" class="ml-auto">
+      <b-navbar-nav v-if="!username" class="ml-auto">
         <li class="nav-item">
           <router-link class="nav-link" to="/login">Login</router-link>
         </li>
@@ -9,10 +9,12 @@
       <b-navbar-nav v-else class="ml-auto">
         <b-nav-item-dropdown right>
           <template v-slot:button-content>
-            <em>{{ username}}</em>
+            <em>{{ username }}</em>
           </template>
           <b-dropdown-item href="#">Profile</b-dropdown-item>
-          <b-dropdown-item-button @click="logout">Sign out</b-dropdown-item-button>
+          <b-dropdown-item-button @click="logout">
+            Sign out
+          </b-dropdown-item-button>
         </b-nav-item-dropdown>
       </b-navbar-nav>
     </b-navbar>
@@ -35,12 +37,14 @@ export default {
   },
   computed: {
     username: function() {
-      return this.$store.state.user.username;
+      return this.$store.state.user ? this.$store.state.user.username : null;
     }
   },
   methods: {
     logout: function() {
-      this.$store.dispatch("logout").then(_ => this.$router.push("login"));
+      this.$store.dispatch("logout").then(() => {
+        this.$router.push("login");
+      });
     }
   }
 };

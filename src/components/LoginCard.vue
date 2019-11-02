@@ -101,7 +101,11 @@ export default {
             password: this.password
           })
           .then(res => {
-            this.$store.dispatch("login", res.data.user);
+            this.$store.dispatch("login", {
+              id: res.data.id,
+              username: res.data.username,
+              email: res.data.email
+            });
             console.log(`response: ${res.data.message}`);
             this.$router.push({ name: "home" });
           })
