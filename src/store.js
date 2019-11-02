@@ -87,40 +87,38 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    login: (context, data) => {
+    login: (context, promise) => {
       return new Promise((resolve, reject) => {
-        this.$http
-          .post(`${process.env.VUE_APP_API_URL}/login`, data)
-          .then(res => {
+        promise
+          .then(function(res) {
             let user = {
               id: res.data.id,
               username: res.data.username,
               email: res.data.email
             };
-            this.commit("authenticated", user);
+            context.commit("authenticated", user);
             resolve(res);
           })
           .catch(err => {
-            this.commit("denied");
+            context.commit("denied");
             reject(err);
           });
       });
     },
-    register: (context, data) => {
+    register: (context, promise) => {
       return new Promise((resolve, reject) => {
-        this.$http
-          .post(`${process.env.VUE_APP_API_URL}/register`, data)
+        promise
           .then(res => {
             let user = {
               id: res.data.id,
               username: res.data.username,
               email: res.data.email
             };
-            this.commit("authenticated", user);
+            context.commit("authenticated", user);
             resolve(res);
           })
           .catch(err => {
-            this.commit("denied");
+            context.commit("denied");
             reject(err);
           });
       });
