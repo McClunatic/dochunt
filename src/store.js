@@ -6,6 +6,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     user: null,
+    query: null,
     fields: [
       {
         col: 0,
@@ -45,6 +46,9 @@ export default new Vuex.Store({
     clearUser: state => {
       state.user = null;
     },
+    setQuery: (state, query) => {
+      state.query = query;
+    },
     freshKills: (state, kills) => {
       console.log("fresh kills: ", kills);
       const killDate = new Date();
@@ -83,6 +87,9 @@ export default new Vuex.Store({
     },
     logout: context => {
       context.commit("clearUser");
+    },
+    updateQuery: (context, query) => {
+      context.commit("setQuery", query);
     },
     updateKills: (context, kills) => {
       context.commit("freshKills", kills);

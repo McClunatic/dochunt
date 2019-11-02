@@ -52,7 +52,9 @@ export default {
   },
   methods: {
     hunt: function() {
-      this.$router.push({ name: "search", query: { target: this.text } });
+      const query = {target: this.text };
+      this.$store.dispatch('updateQuery', query);
+      this.$router.push({ name: "search", query: query });
     },
     clear: function() {
       this.text = "";
