@@ -24,14 +24,35 @@ Vue.component("font-awesome-icon", FontAwesomeIcon);
 
 Vue.use(VueAxios, axios);
 
+const token = localStorage.getItem("token");
+const promises = [];
+if (token) {
+  axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+  promises.push(
+    axios
+      .get(`${process.env.VUE_APP_API_URL}/user`)
+      .then(res => {
+        store.commit("authenticated", {
+          token: token,
+          user: res.data
+        });
+      })
+      .catch(err => {
+        console.log(err);
+      })
+  );
+}
+
 Vue.config.productionTip = false;
 
 if (process.env.NODE_ENV === "development") {
   devtools.connect();
 }
 
-new Vue({
-  store,
-  router,
-  render: h => h(App)
-}).$mount("#app");
+Promise.all(promises).then(() => {
+  new Vue({
+    store,
+    router,
+    render: h => h(App)
+  }).$mount("#app");
+});

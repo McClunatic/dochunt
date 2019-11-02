@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import axios from "axios";
 
 Vue.use(Vuex);
 
@@ -7,6 +8,7 @@ export default new Vuex.Store({
   state: {
     user: null,
     status: null,
+    token: null,
     query: null,
     fields: [
       {
@@ -41,8 +43,9 @@ export default new Vuex.Store({
     kills: []
   },
   mutations: {
-    authenticated: (state, user) => {
+    authenticated: (state, { token, user }) => {
       state.user = user;
+      state.token = token;
       state.status = "authenticated";
     },
     denied: state => {
@@ -50,6 +53,7 @@ export default new Vuex.Store({
     },
     unauthenticated: state => {
       state.user = null;
+      state.token = null;
       state.status = null;
     },
     query: (state, query) => {
@@ -90,13 +94,15 @@ export default new Vuex.Store({
     login: (context, promise) => {
       return new Promise((resolve, reject) => {
         promise
-          .then(function(res) {
-            let user = {
-              id: res.data.id,
-              username: res.data.username,
-              email: res.data.email
-            };
-            context.commit("authenticated", user);
+          .then(res => {
+            localStorage.setItem("token", res.data.token);
+            axios.defaults.headers.common[
+              "Authorization"
+            ] = `Bearer ${res.data.token}`;
+            context.commit("authenticated", {
+              token: res.data.token,
+              user: res.data.user
+            });
             resolve(res);
           })
           .catch(err => {
@@ -109,21 +115,27 @@ export default new Vuex.Store({
       return new Promise((resolve, reject) => {
         promise
           .then(res => {
-            let user = {
-              id: res.data.id,
-              username: res.data.username,
-              email: res.data.email
-            };
-            context.commit("authenticated", user);
+            localStorage.setItem("token", res.data.token);
+            axios.defaults.headers.common[
+              "Authorization"
+            ] = `Bearer ${res.data.token}`;
+            console.log(res.data.user);
+            context.commit("authenticated", {
+              token: res.data.token,
+              user: res.data.user
+            });
             resolve(res);
           })
           .catch(err => {
+            localStorage.removeItem("token");
             context.commit("denied");
             reject(err);
           });
       });
     },
     logout: context => {
+      localStorage.removeItem("token");
+      delete axios.defaults.headers.common["Authorization"];
       context.commit("unauthenticated");
     },
     updateQuery: (context, query) => {
