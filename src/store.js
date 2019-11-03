@@ -10,6 +10,7 @@ export default new Vuex.Store({
     status: null,
     token: null,
     query: null,
+    mode: "hunt",
     fields: [
       {
         col: 0,
@@ -58,6 +59,9 @@ export default new Vuex.Store({
     },
     query: (state, query) => {
       state.query = query;
+    },
+    updateMode: (state, mode) => {
+      state.mode = mode;
     },
     kills: (state, kills) => {
       const killDate = new Date();

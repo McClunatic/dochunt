@@ -95,19 +95,11 @@ export default {
   },
   methods: {
     collectKills: function() {
-      const target = this.$route.query.target;
-      var targetUrl = null;
-      var params = null;
-      if (target.startsWith("~")) {
-        targetUrl = process.env.VUE_APP_API_URL + "/snipe";
-        params = { target: target.substr(1) };
-      } else {
-        targetUrl = process.env.VUE_APP_API_URL + "/hunt";
-        params = { target: target };
-      }
+      let params = { target: this.$route.query.target };
+      let mode = this.$store.state.mode;
       this.killStart = new Date();
       this.$http
-        .get(targetUrl, { params: params })
+        .get(`${process.env.VUE_APP_API_URL}/${mode}`, { params: params })
         .then(res => {
           this.$store.dispatch("updateKills", res.data);
         })

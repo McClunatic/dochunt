@@ -1,7 +1,7 @@
 <template>
   <b-input-group>
     <b-input-group-prepend is-text class="ml-2">
-      <p-check class="p-icon p-plain" color="primary-o" toggle>
+      <p-check class="p-icon p-plain" color="primary-o" v-model="snipe" toggle>
         <font-awesome-icon :icon="['fas', 'search-plus']" slot="extra" />
         Snipe
         <font-awesome-icon :icon="['fas', 'search']" slot="off-extra" />
@@ -42,6 +42,16 @@ export default {
     return {
       text: ""
     };
+  },
+  computed: {
+    snipe: {
+      get() {
+        return this.$store.state.mode === "snipe";
+      },
+      set(value) {
+        this.$store.commit("updateMode", value ? "snipe" : "hunt");
+      }
+    }
   },
   created: function() {
     if (this.$route.query) {
