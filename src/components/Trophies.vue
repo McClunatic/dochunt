@@ -10,7 +10,8 @@
       :filter-function="filterFunction"
       :per-page="perPage"
       :current-page="currentPage"
-      caption="Showing 10 trophies per page"
+      :caption="`Collected ${kills.length} trophies (${killTime} seconds)`"
+      caption-top
     >
       <template v-slot:thead-top="data">
         <b-tr>
@@ -59,7 +60,9 @@ export default {
     return {
       filters: ["", "", "", ""],
       perPage: 10,
-      currentPage: 1
+      currentPage: 1,
+      killStart: new Date(),
+      killEnd: new Date()
     };
   },
   computed: {
@@ -71,6 +74,11 @@ export default {
     },
     rows: function() {
       return this.$store.state.kills.length;
+    },
+    killTime: function() {
+      return this.killStart < this.killEnd
+        ? (this.killEnd - this.killStart) / 1000.0
+        : 0.0;
     }
   },
   created: function() {
@@ -97,6 +105,7 @@ export default {
         targetUrl = process.env.VUE_APP_API_URL + "/hunt";
         params = { target: target };
       }
+      this.killStart = new Date();
       this.$http
         .get(targetUrl, { params: params })
         .then(res => {
@@ -104,6 +113,9 @@ export default {
         })
         .catch(err => {
           console.log(err);
+        })
+        .finally(() => {
+          this.killEnd = new Date();
         });
     },
     filterFunction: function(row, criteria) {
