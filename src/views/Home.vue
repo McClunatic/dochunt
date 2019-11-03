@@ -1,6 +1,9 @@
 <template>
   <b-container fluid>
     <b-navbar toggleable="md">
+      <b-navbar-nav class="mr-auto">
+        <b-nav-item href="#">About</b-nav-item>
+      </b-navbar-nav>
       <b-navbar-nav v-if="!username" class="ml-auto">
         <li class="nav-item">
           <router-link class="nav-link" to="/login">Login</router-link>
