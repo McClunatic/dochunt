@@ -1,7 +1,12 @@
 <template>
   <b-input-group>
     <b-input-group-prepend is-text class="ml-2">
-      <font-awesome-icon :icon="['fas', 'search']" />
+      <p-check class="p-icon p-plain" color="primary-o" toggle>
+        <font-awesome-icon :icon="['fas', 'search-plus']" slot="extra" />
+        Snipe
+        <font-awesome-icon :icon="['fas', 'search']" slot="off-extra" />
+        <label slot="off-label">Hunt</label>
+      </p-check>
     </b-input-group-prepend>
     <b-form-input
       v-model="text"
@@ -78,5 +83,10 @@ li {
 }
 a {
   color: #42b983;
+}
+
+.p-toggle {
+  min-width: 90px;
+  text-align: left;
 }
 </style>

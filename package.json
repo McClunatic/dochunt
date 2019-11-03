@@ -17,6 +17,7 @@
     "bootstrap-vue": "^2.0.0-rc.19",
     "core-js": "^2.6.5",
     "jquery": "^3.4.1",
+    "pretty-checkbox-vue": "^1.1.9",
     "typeface-press-start-2p": "0.0.72",
     "vue": "^2.6.10",
     "vue-axios": "^2.1.5",

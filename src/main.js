@@ -3,22 +3,36 @@ import "mutationobserver-shim";
 import devtools from "@vue/devtools";
 import Vue from "vue";
 import "./plugins/bootstrap-vue";
+import "./plugins/pretty-checkbox-vue";
 import App from "./App.vue";
 import store from "./store";
 import router from "./router";
 import axios from "axios";
 import VueAxios from "vue-axios";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faCrosshairs } from "@fortawesome/free-solid-svg-icons";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
-import { faKey } from "@fortawesome/free-solid-svg-icons";
-import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCrosshairs,
+  faSearch,
+  faSearchPlus,
+  faSearchMinus,
+  faTimes,
+  faUser,
+  faKey,
+  faEnvelope
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import "typeface-press-start-2p";
 
-library.add(faCrosshairs, faSearch, faTimes, faUser, faKey, faEnvelope);
+library.add(
+  faCrosshairs,
+  faSearch,
+  faSearchPlus,
+  faSearchMinus,
+  faTimes,
+  faUser,
+  faKey,
+  faEnvelope
+);
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 
