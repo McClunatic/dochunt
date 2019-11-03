@@ -95,11 +95,12 @@ export default {
   },
   methods: {
     collectKills: function() {
-      let params = { target: this.$route.query.target };
       let mode = this.$store.state.mode;
       this.killStart = new Date();
       this.$http
-        .get(`${process.env.VUE_APP_API_URL}/${mode}`, { params: params })
+        .get(`${process.env.VUE_APP_API_URL}/${mode}`, {
+          params: this.$route.query
+        })
         .then(res => {
           this.$store.dispatch("updateKills", res.data);
         })

@@ -23,6 +23,19 @@
         <font-awesome-icon :icon="['fas', 'times']" />
       </b-button>
     </b-input-group-append>
+    <b-input-group-append v-if="snipe">
+      <b-dropdown :text="target.toString() + ' best'" variant="primary">
+        <b-dropdown-item
+          v-for="option in targetOptions"
+          v-model="target"
+          :key="option.value"
+          :active="target === option.value"
+          @click="updateTarget(option.value)"
+        >
+          {{ option.text }}
+        </b-dropdown-item>
+      </b-dropdown>
+    </b-input-group-append>
     <b-input-group-append>
       <b-button v-if="text" @click="hunt" variant="primary" class="mr-2">
         <font-awesome-icon :icon="['fas', 'crosshairs']" />
@@ -40,7 +53,14 @@ export default {
   props: ["alignment", "size"],
   data: function() {
     return {
-      text: ""
+      text: "",
+      target: 10,
+      targetOptions: [
+        { value: 10, text: "10 best" },
+        { value: 20, text: "20 best" },
+        { value: 50, text: "50 best" },
+        { value: 100, text: "100 best" }
+      ]
     };
   },
   computed: {
@@ -68,8 +88,12 @@ export default {
   methods: {
     hunt: function() {
       const query = { target: this.text };
+      if (this.snipe) query.num_best = this.target;
       this.$store.dispatch("updateQuery", query);
       this.$router.push({ name: "search", query: query });
+    },
+    updateTarget: function(target) {
+      this.target = target;
     },
     clear: function() {
       this.text = "";
@@ -98,5 +122,9 @@ a {
 .p-toggle {
   min-width: 90px;
   text-align: left;
+}
+
+.input-group >>> .dropdown-menu {
+  min-width: 0rem;
 }
 </style>
