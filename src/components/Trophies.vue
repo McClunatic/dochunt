@@ -6,6 +6,7 @@
       responsive
       :fields="fields"
       :items="kills"
+      :busy="isBusy"
       :filter="filters"
       :filter-function="filterFunction"
       :per-page="perPage"
@@ -58,6 +59,7 @@ export default {
   name: "Trophies",
   data: () => {
     return {
+      isBusy: false,
       filters: ["", "", "", ""],
       perPage: 10,
       currentPage: 1,
@@ -95,8 +97,9 @@ export default {
   },
   methods: {
     collectKills: function() {
-      let mode = this.$store.state.mode;
+      this.isBusy = true;
       this.killStart = new Date();
+      let mode = this.$store.state.mode;
       this.$http
         .get(`${process.env.VUE_APP_API_URL}/${mode}`, {
           params: this.$route.query
@@ -106,9 +109,11 @@ export default {
         })
         .catch(err => {
           console.log(err);
+          this.$store.dispatch("updateKills", []);
         })
         .finally(() => {
           this.killEnd = new Date();
+          this.isBusy = false;
         });
     },
     filterFunction: function(row, criteria) {
