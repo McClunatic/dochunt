@@ -22,6 +22,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import "typeface-press-start-2p";
+import VCalendar from "v-calendar";
 
 library.add(
   faCrosshairs,
@@ -37,6 +38,7 @@ library.add(
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 
 Vue.use(VueAxios, axios);
+Vue.use(VCalendar);
 
 const token = localStorage.getItem("token");
 const promises = [];
