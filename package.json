@@ -19,6 +19,7 @@
     "jquery": "^3.4.1",
     "pretty-checkbox-vue": "^1.1.9",
     "typeface-press-start-2p": "0.0.72",
+    "v-calendar": "^1.0.0-beta.22",
     "vue": "^2.6.10",
     "vue-axios": "^2.1.5",
     "vue-router": "^3.0.3",
