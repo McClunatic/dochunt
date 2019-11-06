@@ -5,10 +5,8 @@
       hover
       responsive
       :fields="fields"
-      :items="kills"
+      :items="filteredKills"
       :busy="isBusy"
-      :filter="filters"
-      :filter-function="filterFunction"
       :per-page="perPage"
       :current-page="currentPage"
       :caption="`Collected ${kills.length} trophies (${killTime} seconds)`"
@@ -16,16 +14,23 @@
     >
       <template v-slot:thead-top="data">
         <b-tr>
-          <th v-for="(field, index) in fields" :key="field.col">
-            <b-input-group>
+          <th v-for="field in fields" :key="field.col">
+            <v-date-picker
+              v-if="field.key === 'date'"
+              v-model="filters[field.key]"
+              mode="range"
+              show-caps
+            >
+            </v-date-picker>
+            <b-input-group v-else>
               <b-form-input
-                v-model="filters[index]"
-                :placeholder="'Filter by '.concat(field.key)"
+                v-model="filters[field.key]"
+                :placeholder="`Filter by ${field.key}`"
               ></b-form-input>
               <b-input-group-append>
                 <b-button
-                  v-if="filters[index]"
-                  @click="clear(index)"
+                  v-if="filters[field.key]"
+                  @click="clear(field.key)"
                   type="reset"
                   variant="light"
                 >
@@ -40,7 +45,10 @@
         </b-tr>
       </template>
       <template v-slot:cell(title)="data">
-        <span v-html="data.value"></span>
+        <span v-html="data.value.text.link(data.value.href)"></span>
+      </template>
+      <template v-slot:cell(date)="data">
+        {{ data.value.toLocaleDateString("en-CA") }}
       </template>
     </b-table>
     <div class="overflow-auto mt-4">
@@ -55,12 +63,39 @@
 </template>
 
 <script>
+import Vue from "vue";
+
+function filterString(entry, filter) {
+  return entry.includes(filter);
+}
+
+function filterLink(entry, filter) {
+  return entry.text.includes(filter);
+}
+
+function filterDate(entry, filter) {
+  return entry >= filter.start && entry <= filter.end;
+}
+
+function filterNumber(entry, filter) {
+  return entry >= filter;
+}
+
 export default {
   name: "Trophies",
   data: () => {
     return {
       isBusy: false,
-      filters: ["", "", "", ""],
+      filters: ["id", "title", "author", "date", "similarity"].reduce(
+        (pre, cur) => {
+          pre[cur] =
+            cur === "date"
+              ? { start: new Date(1956, 0, 1), end: new Date() }
+              : "";
+          return pre;
+        },
+        {}
+      ),
       perPage: 10,
       currentPage: 1,
       killStart: new Date(),
@@ -81,6 +116,26 @@ export default {
       return this.killStart < this.killEnd
         ? (this.killEnd - this.killStart) / 1000.0
         : 0.0;
+    },
+    filteredKills: function() {
+      return this.kills.filter(kill => {
+        for (const key of Object.keys(this.filters)) {
+          if (!(key in kill)) continue;
+          if (!this.filters[key]) continue;
+          let filter =
+            key === "date"
+              ? filterDate
+              : key === "similarity"
+              ? filterNumber
+              : key === "title"
+              ? filterLink
+              : filterString;
+          if (!filter(kill[key], this.filters[key])) {
+            return false;
+          }
+        }
+        return true;
+      });
     }
   },
   created: function() {
@@ -132,8 +187,8 @@ export default {
       });
       return results.every(elem => elem);
     },
-    clear: function(index) {
-      this.filters.splice(index, 1, "");
+    clear: function(field) {
+      Vue.set(this.filters, field, "");
     }
   }
 };

@@ -64,12 +64,10 @@ export default new Vuex.Store({
       state.mode = mode;
     },
     kills: (state, kills) => {
-      const killDate = new Date();
       const trophies = kills.map(kill => {
         let trophy = Object.assign({}, kill);
-        killDate.setTime(Date.parse(kill.date));
-        trophy.date = killDate.toLocaleDateString("en-CA");
-        trophy.title = kill.title.link(kill.href);
+        trophy.date = new Date(kill.date);
+        trophy.title = { text: kill.title, href: kill.href };
         if (kill.similarity) trophy.similarity = kill.similarity.toFixed(8);
         return trophy;
       });
