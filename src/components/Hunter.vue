@@ -54,6 +54,7 @@ export default {
   data: function() {
     return {
       text: "",
+      mode: "hunt",
       target: 10,
       targetOptions: [
         { value: 10, text: "10 best" },
@@ -66,16 +67,17 @@ export default {
   computed: {
     snipe: {
       get() {
-        return this.$store.state.mode === "snipe";
+        return this.mode === "snipe";
       },
       set(value) {
-        this.$store.commit("updateMode", value ? "snipe" : "hunt");
+        this.mode = value ? "snipe" : "hunt";
       }
     }
   },
   created: function() {
     if (this.$route.query) {
       this.text = this.$route.query.target;
+      this.snipe = this.$route.query.mode === "snipe";
     }
   },
   watch: {
@@ -87,9 +89,8 @@ export default {
   },
   methods: {
     hunt: function() {
-      const query = { target: this.text };
+      const query = { target: this.text, mode: this.mode };
       if (this.snipe) query.num_best = this.target;
-      this.$store.dispatch("updateQuery", query);
       this.$router.push({ name: "search", query: query });
     },
     updateTarget: function(target) {

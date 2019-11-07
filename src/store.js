@@ -9,8 +9,6 @@ export default new Vuex.Store({
     user: null,
     status: null,
     token: null,
-    query: null,
-    mode: "hunt",
     fields: [
       {
         col: 0,
@@ -56,12 +54,6 @@ export default new Vuex.Store({
       state.user = null;
       state.token = null;
       state.status = null;
-    },
-    query: (state, query) => {
-      state.query = query;
-    },
-    updateMode: (state, mode) => {
-      state.mode = mode;
     },
     kills: (state, kills) => {
       const trophies = kills.map(kill => {
@@ -139,9 +131,6 @@ export default new Vuex.Store({
       localStorage.removeItem("token");
       delete axios.defaults.headers.common["Authorization"];
       context.commit("unauthenticated");
-    },
-    updateQuery: (context, query) => {
-      context.commit("query", query);
     },
     updateKills: (context, kills) => {
       context.commit("kills", kills);

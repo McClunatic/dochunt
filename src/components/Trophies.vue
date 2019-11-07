@@ -58,7 +58,7 @@
                 </b-modal>
               </b-dropdown>
               <b-button
-                v-if="filters[field.key]"
+                v-if="filters[field.key].start || filters[field.key].end"
                 @click="clearDate(field.key)"
                 type="reset"
                 variant="light"
@@ -186,7 +186,7 @@ export default {
     collectKills: function() {
       this.isBusy = true;
       this.killStart = new Date();
-      let mode = this.$store.state.mode;
+      let mode = this.$route.query.mode;
       this.$http
         .get(`${process.env.VUE_APP_API_URL}/${mode}`, {
           params: this.$route.query
@@ -216,7 +216,6 @@ export default {
             ? filterLink
             : filterString;
         if (!filter(kill[key], criteria[key])) {
-          // console.log(key, kill[key], criteria[key]);
           return false;
         }
       }
