@@ -34,15 +34,32 @@
                 </b-dropdown-item>
                 <b-dropdown-divider></b-dropdown-divider>
                 <b-dropdown-item v-b-modal.modal-date>
-                  Custom date range...
+                  Custom date range...&nbsp;
+                  <font-awesome-icon :icon="['fas', 'calendar']" />
                 </b-dropdown-item>
-                <b-modal id="modal-date" centered title="BootstrapVue">
-                  <p class="my-4">Vertically centered modal!</p>
+                <b-modal
+                  id="modal-date"
+                  size="sm"
+                  centered
+                  title="Custom date range"
+                  @show="handleDateShow()"
+                  @ok="handleDateOK()"
+                >
+                  <b-container fluid>
+                    <div>
+                      <b-form-group label="From" label-cols="3">
+                        <v-date-picker v-model="pickerStart"></v-date-picker>
+                      </b-form-group>
+                      <b-form-group label="To" label-cols="3">
+                        <v-date-picker v-model="pickerEnd"></v-date-picker>
+                      </b-form-group>
+                    </div>
+                  </b-container>
                 </b-modal>
               </b-dropdown>
               <b-button
                 v-if="filters[field.key]"
-                @click="clear(field.key)"
+                @click="clearDate(field.key)"
                 type="reset"
                 variant="light"
               >
@@ -132,7 +149,9 @@ export default {
       perPage: 10,
       currentPage: 1,
       killStart: new Date(),
-      killEnd: new Date()
+      killEnd: new Date(),
+      pickerStart: null,
+      pickerEnd: null
     };
   },
   computed: {
@@ -227,6 +246,18 @@ export default {
     },
     clearDate: function(field) {
       Vue.set(this.filters, field, { start: null, end: null });
+    },
+    handleDateShow: function() {
+      let start = this.filters.date.start;
+      let end = this.filters.date.end;
+      this.pickerStart = start ? new Date(start) : null;
+      this.pickerEnd = end ? new Date(end) : null;
+    },
+    handleDateOK: function() {
+      let start = this.pickerStart;
+      let end = this.pickerEnd;
+      this.filters.date.start = start ? new Date(start) : null;
+      this.filters.date.end = end ? new Date(end) : null;
     }
   }
 };
