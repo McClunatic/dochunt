@@ -23,11 +23,22 @@
                 <b-dropdown-item @click="clearDate(field.key)">
                   Any time
                 </b-dropdown-item>
-                <b-dropdown-item @click="filterWeek()">Past week</b-dropdown-item>
-                <b-dropdown-item @click="filterMonth()">Past month</b-dropdown-item>
-                <b-dropdown-item @click="filterYear()">Past year</b-dropdown-item>
+                <b-dropdown-item @click="filterWeek()">
+                  Past week
+                </b-dropdown-item>
+                <b-dropdown-item @click="filterMonth()">
+                  Past month
+                </b-dropdown-item>
+                <b-dropdown-item @click="filterYear()">
+                  Past year
+                </b-dropdown-item>
                 <b-dropdown-divider></b-dropdown-divider>
-                <b-dropdown-item>Custom date range...</b-dropdown-item>
+                <b-dropdown-item v-b-modal.modal-date>
+                  Custom date range...
+                </b-dropdown-item>
+                <b-modal id="modal-date" centered title="BootstrapVue">
+                  <p class="my-4">Vertically centered modal!</p>
+                </b-modal>
               </b-dropdown>
               <b-button
                 v-if="filters[field.key]"
@@ -93,8 +104,8 @@ function filterLink(entry, filter) {
 }
 
 function filterDate(entry, filter) {
-  let start = filter.start ? (entry >= filter.start) : true;
-  let end = filter.end ? (entry <= filter.end) : true
+  let start = filter.start ? entry >= filter.start : true;
+  let end = filter.end ? entry <= filter.end : true;
   return start && end;
 }
 
