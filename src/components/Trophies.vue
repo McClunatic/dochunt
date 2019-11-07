@@ -5,7 +5,10 @@
       hover
       responsive
       :fields="fields"
-      :items="filteredKills"
+      :items="kills"
+      :filter="filters"
+      :filter-function="filterFunction"
+      @filtered="onFiltered"
       :busy="isBusy"
       :per-page="perPage"
       :current-page="currentPage"
@@ -15,13 +18,11 @@
       <template v-slot:thead-top="data">
         <b-tr>
           <th v-for="field in fields" :key="field.col">
-            <v-date-picker
-              v-if="field.key === 'date'"
-              v-model="filters[field.key]"
-              mode="range"
-              show-caps
-            >
-            </v-date-picker>
+            <b-input-group v-if="field.key === 'date'">
+              <v-date-picker v-model="filters[field.key].start">
+              </v-date-picker>
+              <v-date-picker v-model="filters[field.key].end"></v-date-picker>
+            </b-input-group>
             <b-input-group v-else>
               <b-form-input
                 v-model="filters[field.key]"
@@ -55,7 +56,7 @@
       <b-pagination
         align="center"
         v-model="currentPage"
-        :total-rows="rows"
+        :total-rows="filteredRows"
         :per-page="perPage"
       ></b-pagination>
     </div>
@@ -74,7 +75,9 @@ function filterLink(entry, filter) {
 }
 
 function filterDate(entry, filter) {
-  return entry >= filter.start && entry <= filter.end;
+  let start = filter.start || new Date(1776, 6, 4);
+  let end = filter.start || new Date(3000, 0, 1);
+  return entry >= start && entry <= end;
 }
 
 function filterNumber(entry, filter) {
@@ -86,16 +89,17 @@ export default {
   data: () => {
     return {
       isBusy: false,
-      filters: ["id", "title", "author", "date", "similarity"].reduce(
-        (pre, cur) => {
-          pre[cur] =
-            cur === "date"
-              ? { start: new Date(1956, 0, 1), end: new Date() }
-              : "";
-          return pre;
+      filters: {
+        id: null,
+        title: null,
+        author: null,
+        date: {
+          start: null,
+          end: null
         },
-        {}
-      ),
+        similarity: null
+      },
+      filteredRows: 1,
       perPage: 10,
       currentPage: 1,
       killStart: new Date(),
@@ -116,26 +120,6 @@ export default {
       return this.killStart < this.killEnd
         ? (this.killEnd - this.killStart) / 1000.0
         : 0.0;
-    },
-    filteredKills: function() {
-      return this.kills.filter(kill => {
-        for (const key of Object.keys(this.filters)) {
-          if (!(key in kill)) continue;
-          if (!this.filters[key]) continue;
-          let filter =
-            key === "date"
-              ? filterDate
-              : key === "similarity"
-              ? filterNumber
-              : key === "title"
-              ? filterLink
-              : filterString;
-          if (!filter(kill[key], this.filters[key])) {
-            return false;
-          }
-        }
-        return true;
-      });
     }
   },
   created: function() {
@@ -171,21 +155,28 @@ export default {
           this.isBusy = false;
         });
     },
-    filterFunction: function(row, criteria) {
-      const results = criteria.map((elem, col) => {
-        if (elem.length === 0) {
-          return true;
+    filterFunction: function(kill, criteria) {
+      for (const key of Object.keys(criteria)) {
+        if (!(key in kill)) continue;
+        if (!criteria[key]) continue;
+        let filter =
+          key === "date"
+            ? filterDate
+            : key === "similarity"
+            ? filterNumber
+            : key === "title"
+            ? filterLink
+            : filterString;
+        if (!filter(kill[key], criteria[key])) {
+          console.log(key, kill[key], criteria[key]);
+          return false;
         }
-        const key = this.$store.state.fields.filter(obj => obj.col === col)[0]
-          .key;
-        try {
-          var regex = new RegExp(elem);
-          return row[key].match(regex);
-        } catch (exc) {
-          return row[key].includes(elem);
-        }
-      });
-      return results.every(elem => elem);
+      }
+      return true;
+    },
+    onFiltered: function(filteredItems) {
+      this.filteredRows = filteredItems.length;
+      this.currentPage = 1;
     },
     clear: function(field) {
       Vue.set(this.filters, field, "");
