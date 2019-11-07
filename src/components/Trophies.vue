@@ -18,11 +18,29 @@
       <template v-slot:thead-top="data">
         <b-tr>
           <th v-for="field in fields" :key="field.col">
-            <b-input-group v-if="field.key === 'date'">
-              <v-date-picker v-model="filters[field.key].start">
-              </v-date-picker>
-              <v-date-picker v-model="filters[field.key].end"></v-date-picker>
-            </b-input-group>
+            <b-button-group v-if="field.key === 'date'">
+              <b-dropdown text="Filter...">
+                <b-dropdown-item @click="clearDate(field.key)">
+                  Any time
+                </b-dropdown-item>
+                <b-dropdown-item @click="filterWeek">Past week</b-dropdown-item>
+                <b-dropdown-item @click="filterMonth">Past month</b-dropdown-item>
+                <b-dropdown-item @click="filterYear">Past year</b-dropdown-item>
+                <b-dropdown-divider></b-dropdown-divider>
+                <b-dropdown-item>Custom date range...</b-dropdown-item>
+              </b-dropdown>
+              <b-button
+                v-if="filters[field.key]"
+                @click="clear(field.key)"
+                type="reset"
+                variant="light"
+              >
+                <font-awesome-icon :icon="['fas', 'times']" />
+              </b-button>
+              <b-button v-else disabled type="reset" variant="light">
+                <font-awesome-icon :icon="['fas', 'times']" />
+              </b-button>
+            </b-button-group>
             <b-input-group v-else>
               <b-form-input
                 v-model="filters[field.key]"
@@ -180,10 +198,17 @@ export default {
     },
     clear: function(field) {
       Vue.set(this.filters, field, "");
+    },
+    clearDate: function(field) {
+      Vue.set(this.filters, field, { start: null, end: null });
     }
   }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped></style>
+<style scoped>
+.btn-group {
+  width: 100%;
+}
+</style>
