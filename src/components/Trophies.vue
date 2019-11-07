@@ -23,9 +23,9 @@
                 <b-dropdown-item @click="clearDate(field.key)">
                   Any time
                 </b-dropdown-item>
-                <b-dropdown-item @click="filterWeek">Past week</b-dropdown-item>
-                <b-dropdown-item @click="filterMonth">Past month</b-dropdown-item>
-                <b-dropdown-item @click="filterYear">Past year</b-dropdown-item>
+                <b-dropdown-item @click="filterWeek()">Past week</b-dropdown-item>
+                <b-dropdown-item @click="filterMonth()">Past month</b-dropdown-item>
+                <b-dropdown-item @click="filterYear()">Past year</b-dropdown-item>
                 <b-dropdown-divider></b-dropdown-divider>
                 <b-dropdown-item>Custom date range...</b-dropdown-item>
               </b-dropdown>
@@ -93,9 +93,9 @@ function filterLink(entry, filter) {
 }
 
 function filterDate(entry, filter) {
-  let start = filter.start || new Date(1776, 6, 4);
-  let end = filter.start || new Date(3000, 0, 1);
-  return entry >= start && entry <= end;
+  let start = filter.start ? (entry >= filter.start) : true;
+  let end = filter.end ? (entry <= filter.end) : true
+  return start && end;
 }
 
 function filterNumber(entry, filter) {
@@ -186,7 +186,7 @@ export default {
             ? filterLink
             : filterString;
         if (!filter(kill[key], criteria[key])) {
-          console.log(key, kill[key], criteria[key]);
+          // console.log(key, kill[key], criteria[key]);
           return false;
         }
       }
@@ -198,6 +198,21 @@ export default {
     },
     clear: function(field) {
       Vue.set(this.filters, field, "");
+    },
+    filterWeek: function() {
+      let oneWeekAgo = new Date();
+      oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+      this.filters.date.start = oneWeekAgo;
+    },
+    filterMonth: function() {
+      let oneMonthAgo = new Date();
+      oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
+      this.filters.date.start = oneMonthAgo;
+    },
+    filterYear: function() {
+      let oneYearAgo = new Date();
+      oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
+      this.filters.date.start = oneYearAgo;
     },
     clearDate: function(field) {
       Vue.set(this.filters, field, { start: null, end: null });
