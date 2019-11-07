@@ -18,7 +18,8 @@ import {
   faTimes,
   faUser,
   faKey,
-  faEnvelope
+  faEnvelope,
+  faCalendar
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import "typeface-press-start-2p";
@@ -32,7 +33,8 @@ library.add(
   faTimes,
   faUser,
   faKey,
-  faEnvelope
+  faEnvelope,
+  faCalendar
 );
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);
