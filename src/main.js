@@ -63,7 +63,10 @@ if (token) {
 
 Vue.config.productionTip = false;
 
-if (process.env.NODE_ENV === "development") {
+if (
+  process.env.NODE_ENV === "development" &&
+  process.env.VUE_APP_DEVTOOLS_CONNECT
+) {
   devtools.connect();
 }
 
