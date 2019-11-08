@@ -65,7 +65,7 @@ Vue.config.productionTip = false;
 
 if (
   process.env.NODE_ENV === "development" &&
-  process.env.VUE_APP_DEVTOOLS_CONNECT
+  process.env.VUE_APP_DEVTOOLS_CONNECT === "true"
 ) {
   devtools.connect();
 }
