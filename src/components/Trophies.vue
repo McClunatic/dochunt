@@ -23,13 +23,13 @@
                 <b-dropdown-item @click="clearDate(field.key)">
                   Any time
                 </b-dropdown-item>
-                <b-dropdown-item @click="filterWeek()">
+                <b-dropdown-item @click="filterWeek(field.key)">
                   Past week
                 </b-dropdown-item>
-                <b-dropdown-item @click="filterMonth()">
+                <b-dropdown-item @click="filterMonth(field.key)">
                   Past month
                 </b-dropdown-item>
-                <b-dropdown-item @click="filterYear()">
+                <b-dropdown-item @click="filterYear(field.key)">
                   Past year
                 </b-dropdown-item>
                 <b-dropdown-divider></b-dropdown-divider>
@@ -135,16 +135,7 @@ export default {
   data: () => {
     return {
       isBusy: false,
-      filters: {
-        id: null,
-        title: null,
-        author: null,
-        date: {
-          start: null,
-          end: null
-        },
-        similarity: null
-      },
+      filters: {},
       filteredRows: 1,
       perPage: 10,
       currentPage: 1,
@@ -171,6 +162,13 @@ export default {
     }
   },
   created: function() {
+    this.$store.state.fields.forEach(field => {
+      if (field.key === "date") {
+        Vue.set(this.filters, field.key, { start: null, end: null });
+      } else {
+        Vue.set(this.filters, field.key, null);
+      }
+    });
     if (this.$route.query.target) {
       this.collectKills();
     }
@@ -228,35 +226,35 @@ export default {
     clear: function(field) {
       Vue.set(this.filters, field, "");
     },
-    filterWeek: function() {
+    filterWeek: function(field) {
       let oneWeekAgo = new Date();
       oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
-      this.filters.date.start = oneWeekAgo;
+      this.filters[field].start = oneWeekAgo;
     },
-    filterMonth: function() {
+    filterMonth: function(field) {
       let oneMonthAgo = new Date();
       oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
-      this.filters.date.start = oneMonthAgo;
+      this.filters[field].start = oneMonthAgo;
     },
-    filterYear: function() {
+    filterYear: function(field) {
       let oneYearAgo = new Date();
       oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
-      this.filters.date.start = oneYearAgo;
+      this.filters[field].start = oneYearAgo;
     },
     clearDate: function(field) {
       Vue.set(this.filters, field, { start: null, end: null });
     },
-    handleDateShow: function() {
-      let start = this.filters.date.start;
-      let end = this.filters.date.end;
+    handleDateShow: function(field) {
+      let start = this.filters[field].start;
+      let end = this.filters[field].end;
       this.pickerStart = start ? new Date(start) : null;
       this.pickerEnd = end ? new Date(end) : null;
     },
-    handleDateOK: function() {
+    handleDateOK: function(field) {
       let start = this.pickerStart;
       let end = this.pickerEnd;
-      this.filters.date.start = start ? new Date(start) : null;
-      this.filters.date.end = end ? new Date(end) : null;
+      this.filters[field].start = start ? new Date(start) : null;
+      this.filters[field].end = end ? new Date(end) : null;
     }
   }
 };
