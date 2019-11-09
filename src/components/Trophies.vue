@@ -72,7 +72,7 @@
             <b-input-group v-else>
               <b-form-input
                 v-model="filters[field.key]"
-                :placeholder="`Filter by ${field.key}`"
+                :placeholder="`Filter by ${field.label.toLowerCase()}`"
               ></b-form-input>
               <b-input-group-append>
                 <b-button
