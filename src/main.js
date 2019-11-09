@@ -5,7 +5,7 @@ import Vue from "vue";
 import "./plugins/bootstrap-vue";
 import "./plugins/pretty-checkbox-vue";
 import App from "./App.vue";
-import store from "./store";
+import { createStore } from "./store";
 import router from "./router";
 import axios from "axios";
 import VueAxios from "vue-axios";
@@ -44,18 +44,34 @@ Vue.component("font-awesome-icon", FontAwesomeIcon);
 Vue.use(VueAxios, axios);
 Vue.use(VCalendar);
 
+Vue.config.productionTip = false;
+
+if (process.env.NODE_ENV === "development") {
+  devtools.connect();
+}
+
 const token = localStorage.getItem("token");
+if (token) axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+
+// get user and fields data from API to initialize store
 const promises = [];
+let initialState = {
+  user: null,
+  token: null,
+  status: null,
+  fields: null,
+  kills: []
+};
+
 if (token) {
   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
   promises.push(
     axios
       .get(`${process.env.VUE_APP_API_URL}/user`)
       .then(res => {
-        store.commit("authenticated", {
-          token: token,
-          user: res.data
-        });
+        initialState.user = res.data;
+        initialState.token = token;
+        initialState.status = "authenticated";
       })
       .catch(err => {
         console.log(err);
@@ -63,16 +79,19 @@ if (token) {
   );
 }
 
-Vue.config.productionTip = false;
-
-if (
-  process.env.NODE_ENV === "development" &&
-  process.env.VUE_APP_DEVTOOLS_CONNECT === "true"
-) {
-  devtools.connect();
-}
+promises.push(
+  axios
+    .get(`${process.env.VUE_APP_API_URL}/fields`)
+    .then(res => {
+      initialState.fields = res.data;
+    })
+    .catch(err => {
+      console.log(err);
+    })
+);
 
 Promise.all(promises).then(() => {
+  const store = createStore(initialState);
   new Vue({
     store,
     router,

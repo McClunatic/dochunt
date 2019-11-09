@@ -4,7 +4,6 @@ import Home from "./views/Home.vue";
 import Login from "./views/Login.vue";
 import Register from "./views/Register.vue";
 import Search from "./views/Search.vue";
-import store from "./store";
 
 Vue.use(Router);
 
@@ -17,7 +16,8 @@ export default new Router({
       name: "home",
       component: Home,
       beforeEnter: (to, from, next) => {
-        if (!store.state.token) next({ name: "login" });
+        let token = localStorage.getItem("token");
+        if (!token) next({ name: "login" });
         else next();
       }
     },
@@ -26,7 +26,8 @@ export default new Router({
       name: "login",
       component: Login,
       beforeEnter: (to, from, next) => {
-        if (store.state.token) next({ name: "home" });
+        let token = localStorage.getItem("token");
+        if (token) next({ name: "home" });
         else next();
       }
     },
@@ -35,7 +36,8 @@ export default new Router({
       name: "register",
       component: Register,
       beforeEnter: (to, from, next) => {
-        if (store.state.token) next({ name: "home" });
+        let token = localStorage.getItem("token");
+        if (token) next({ name: "home" });
         else next();
       }
     },
@@ -44,8 +46,8 @@ export default new Router({
       name: "search",
       component: Search,
       beforeEnter: (to, from, next) => {
-        if (!store.state.token)
-          next({ name: "login", next: { path: to.fullPath } });
+        let token = localStorage.getItem("token");
+        if (!token) next({ name: "login", next: { path: to.fullPath } });
         else next();
       }
     }
