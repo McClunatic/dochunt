@@ -91,11 +91,17 @@
           </th>
         </b-tr>
       </template>
+      <template v-slot:cell(id)="data">
+        <span v-html="data.value.text.link(data.value.href)"></span>
+      </template>
       <template v-slot:cell(title)="data">
         <span v-html="data.value.text.link(data.value.href)"></span>
       </template>
       <template v-slot:cell(date)="data">
         {{ data.value.toLocaleDateString("en-CA") }}
+      </template>
+      <template v-slot:cell(similarity)="data">
+        {{ data.value.toFixed(6) }}
       </template>
     </b-table>
     <div class="overflow-auto mt-4">

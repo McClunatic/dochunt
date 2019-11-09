@@ -31,8 +31,14 @@ export function createStore(initialState) {
         const trophies = kills.map(kill => {
           let trophy = Object.assign({}, kill);
           trophy.date = new Date(kill.date);
-          trophy.title = { text: kill.title, href: kill.href };
-          if (kill.similarity) trophy.similarity = kill.similarity.toFixed(8);
+          state.fields.forEach(field => {
+            if ("tagKey" in field) {
+              trophy[field.key] = {
+                text: kill[field.key],
+                href: kill[field.tagKey]
+              };
+            }
+          });
           return trophy;
         });
 
@@ -40,16 +46,14 @@ export function createStore(initialState) {
 
         const newFields = state.fields.slice();
         if (trophies.length > 0 && trophies[0].similarity) {
-          newFields[3].thStyle = "width: 8%";
           newFields[4] = {
             col: 4,
             key: "similarity",
             label: "Similarity",
             sortable: true,
-            thStyle: "width: 8%"
+            thStyle: "width: 1%"
           };
         } else {
-          newFields[3].thStyle = "width: 16%";
           newFields.length = 4;
         }
 
