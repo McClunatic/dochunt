@@ -47,13 +47,15 @@ export default {
   data: () => {
     return {
       loaded: true,
-      tags: [],
       tagUpdates: [],
       tagDeletions: [],
       newTag: null
     };
   },
   computed: {
+    tags: function() {
+      return this.$store.state.tags;
+    },
     allTags: function() {
       return !this.loaded
         ? []
@@ -85,11 +87,11 @@ export default {
       this.$http
         .get(`${process.env.VUE_APP_API_URL}/profile`)
         .then(res => {
-          this.tags = res.data;
+          this.$store.dispatch("updateTags", res.data);
         })
         .catch(err => {
           console.log(err);
-          this.tags = [];
+          this.$store.dispatch("updateTags", []);
         })
         .finally(() => {
           this.loaded = true;

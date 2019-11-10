@@ -11,7 +11,8 @@ export function createStore(initialState) {
       status: initialState.status,
       token: initialState.token,
       fields: initialState.fields,
-      kills: initialState.kills
+      kills: initialState.kills,
+      tags: initialState.tags
     },
     mutations: {
       authenticated: (state, { token, user }) => {
@@ -58,6 +59,9 @@ export function createStore(initialState) {
         }
 
         Vue.set(state, "fields", newFields);
+      },
+      tags: (state, tags) => {
+        Vue.set(state, "tags", tags);
       }
     },
     actions: {
@@ -110,6 +114,9 @@ export function createStore(initialState) {
       },
       updateKills: (context, kills) => {
         context.commit("kills", kills);
+      },
+      updateTags: (context, tags) => {
+        context.commit("tags", tags);
       }
     }
   });

@@ -62,7 +62,8 @@ let initialState = {
   token: null,
   status: null,
   fields: null,
-  kills: []
+  kills: [],
+  tags: []
 };
 
 if (token) {
