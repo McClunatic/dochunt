@@ -93,6 +93,17 @@ promises.push(
     })
 );
 
+promises.push(
+  axios
+    .get(`${process.env.VUE_APP_API_URL}/profile`)
+    .then(res => {
+      initialState.tags = res.data;
+    })
+    .catch(err => {
+      console.log(err);
+    })
+);
+
 Promise.all(promises).then(() => {
   const store = createStore(initialState);
   new Vue({
