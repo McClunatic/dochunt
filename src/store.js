@@ -12,7 +12,8 @@ export function createStore(initialState) {
       token: initialState.token,
       fields: initialState.fields,
       kills: initialState.kills,
-      tags: initialState.tags
+      tags: initialState.tags,
+      numFields: initialState.fields.length
     },
     mutations: {
       authenticated: (state, { token, user }) => {
@@ -48,15 +49,15 @@ export function createStore(initialState) {
 
         const newFields = state.fields.slice();
         if (trophies.length > 0 && trophies[0].similarity) {
-          newFields[4] = {
-            col: 4,
+          newFields[state.numFields] = {
+            col: state.numFields,
             key: "similarity",
             label: "Similarity",
             sortable: true,
             thStyle: "width: 1%"
           };
         } else {
-          newFields.length = 4;
+          newFields.length = state.numFields;
         }
 
         Vue.set(state, "fields", newFields);
