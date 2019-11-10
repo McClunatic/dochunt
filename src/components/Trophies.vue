@@ -4,6 +4,9 @@
       striped
       hover
       responsive
+      selectable
+      select-mode="single"
+      @row-selected="handleSelectRow"
       :fields="fields"
       :items="kills"
       :filter="filters"
@@ -254,6 +257,9 @@ export default {
     },
     clearDate: function(field) {
       Vue.set(this.filters, field, { start: null, end: null });
+    },
+    handleSelectRow: function(rows) {
+      this.$copyText(rows[0].id.text);
     },
     handleDateShow: function(field) {
       let start = this.filters[field].start;

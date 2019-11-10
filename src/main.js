@@ -26,6 +26,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import "typeface-press-start-2p";
 import VCalendar from "v-calendar";
+import VueClipboard from "vue-clipboard2";
 
 library.add(
   faCrosshairs,
@@ -45,6 +46,7 @@ Vue.component("font-awesome-icon", FontAwesomeIcon);
 
 Vue.use(VueAxios, axios);
 Vue.use(VCalendar);
+Vue.use(VueClipboard);
 
 Vue.config.productionTip = false;
 
