@@ -156,7 +156,12 @@ export default {
       return this.$store.state.fields;
     },
     kills: function() {
-      return this.$store.state.kills;
+      return this.$store.state.kills.map(kill => {
+        let tags = this.$store.state.tags.map(tag => tag.tag);
+        return kill.tags.some(tag => tags.includes(tag))
+          ? kill
+          : { ...kill, _rowVariant: "danger" };
+      });
     },
     rows: function() {
       return this.$store.state.kills.length;

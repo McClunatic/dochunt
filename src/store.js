@@ -32,6 +32,7 @@ export function createStore(initialState) {
         const trophies = kills.map(kill => {
           let trophy = Object.assign({}, kill);
           trophy.date = new Date(kill.date);
+          trophy.tags = kill.tags.split(",");
           state.fields.forEach(field => {
             if ("tagKey" in field) {
               trophy[field.key] = {
