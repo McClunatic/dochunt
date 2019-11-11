@@ -89,7 +89,7 @@ export default {
   },
   methods: {
     hunt: function() {
-      const query = { target: this.text, mode: this.mode };
+      const query = { target: this.text.trim(), mode: this.mode };
       if (this.snipe) query.num_best = this.target;
       this.$router.push({ name: "search", query: query });
     },
