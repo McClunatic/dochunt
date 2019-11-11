@@ -259,7 +259,7 @@ export default {
       Vue.set(this.filters, field, { start: null, end: null });
     },
     handleSelectRow: function(rows) {
-      this.$copyText(rows[0].id.text);
+      if (rows.length > 0) this.$copyText(rows[0].id.text);
     },
     handleDateShow: function(field) {
       let start = this.filters[field].start;
