@@ -8,6 +8,7 @@ import App from "./App.vue";
 import { createStore } from "./store";
 import router from "./router";
 import axios from "axios";
+import "./interceptor";
 import VueAxios from "vue-axios";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {

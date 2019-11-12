@@ -68,24 +68,22 @@ export function createStore(initialState) {
     },
     actions: {
       login: (context, promise) => {
-        return new Promise((resolve, reject) => {
-          promise
-            .then(res => {
-              localStorage.setItem("token", res.data.token);
-              axios.defaults.headers.common[
-                "Authorization"
-              ] = `Bearer ${res.data.token}`;
-              context.commit("authenticated", {
-                token: res.data.token,
-                user: res.data.user
-              });
-              resolve(res);
-            })
-            .catch(err => {
-              context.commit("denied");
-              reject(err);
+        return promise
+          .then(res => {
+            localStorage.setItem("token", res.data.token);
+            axios.defaults.headers.common[
+              "Authorization"
+            ] = `Bearer ${res.data.token}`;
+            context.commit("authenticated", {
+              token: res.data.token,
+              user: res.data.user
             });
-        });
+            return res;
+          })
+          .catch(err => {
+            context.commit("denied");
+            throw err;
+          });
       },
       register: (context, promise) => {
         return new Promise((resolve, reject) => {

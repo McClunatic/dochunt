@@ -5,13 +5,21 @@
 </template>
 
 <script>
+import Vue from "vue";
+import interceptor from "./interceptor";
+
 export default {
   created: function() {
-    this.$http.interceptors.response.use(undefined, function(err) {
-      if (err.status === 401 && err.config && !err.config.__isRetryRequest) {
-        this.$store.dispatch("logout");
-      }
-      Promise.reject(err);
+    this.$http.interceptors.response.eject(interceptor);
+    this.$http.interceptors.response.use(undefined, err => {
+      return new Promise((resolve, reject) => {
+        let res = err.response;
+        if (res.status === 200) resolve();
+        if (res.status === 401 && res.config && !res.config.__isRetryRequest) {
+          Vue.nextTick(() => this.$store.dispatch("logout"));
+        }
+        reject(err);
+      });
     });
   }
 };

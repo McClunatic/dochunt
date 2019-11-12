@@ -17,7 +17,8 @@
           <template v-slot:button-content>
             <em>{{ username }}</em>
           </template>
-          <b-dropdown-item href="#">Profile</b-dropdown-item>
+          <b-dropdown-item v-b-modal.modal-profile>Profile</b-dropdown-item>
+          <profile :username="username"></profile>
           <b-dropdown-item-button @click="logout">
             Sign out
           </b-dropdown-item-button>
@@ -32,12 +33,14 @@
 // @ is an alias to /src
 import Hunter from "@/components/Hunter.vue";
 import Trophies from "@/components/Trophies.vue";
+import Profile from "@/components/Profile.vue";
 
 export default {
   name: "search",
   components: {
     Hunter,
-    Trophies
+    Trophies,
+    Profile
   },
   computed: {
     username: function() {

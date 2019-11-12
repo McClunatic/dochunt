@@ -183,12 +183,14 @@ export default {
         Vue.set(this.filters, field.key, null);
       }
     });
+    this.fetchTags();
     if (this.$route.query.target) {
       this.collectKills();
     }
   },
   watch: {
     $route: function() {
+      this.fetchTags();
       if (this.$route.query.target) {
         this.collectKills();
       }
@@ -272,6 +274,18 @@ export default {
       let end = this.pickerEnd;
       this.filters[field].start = start ? new Date(start) : null;
       this.filters[field].end = end ? new Date(end) : null;
+    },
+    fetchTags: function() {
+      // handle tag fetches
+      this.$http
+        .get(`${process.env.VUE_APP_API_URL}/profile`)
+        .then(res => {
+          this.$store.dispatch("updateTags", res.data);
+        })
+        .catch(err => {
+          console.log(err);
+          this.$store.dispatch("updateTags", []);
+        });
     }
   }
 };
