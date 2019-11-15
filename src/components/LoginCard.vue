@@ -137,7 +137,7 @@ h4 {
 }
 
 .card {
-  height: 325px;
+  height: 330px;
   width: 350px;
 }
 
